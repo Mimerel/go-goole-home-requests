@@ -51,7 +51,7 @@ func main() {
 			w.WriteHeader(500)
 		}
 		})
-	err := http.ListenAndServe(":9999" , nil)
+	err := http.ListenAndServe(":9998" , nil)
 	if err != nil {
 		log.Errorf("error %+v", err)
 	}
