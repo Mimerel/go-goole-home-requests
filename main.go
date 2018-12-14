@@ -23,6 +23,7 @@ func ExecuteRequest(url string, id string, instance string, commandClass string,
 		Timeout: timeout,
 	}
 	postingUrl := "http://" + url + ":8083/ZWaveAPI/Run/devices[" + id + "].instances[" + instance + "].commandClasses["+ commandClass +"].Set("+ level + ")"
+	log.Info("Request posted : %s", postingUrl)
 
 	_, err = client.Get(postingUrl)
 	if err != nil {
@@ -46,8 +47,11 @@ func main() {
 		urlPath := r.URL.Path
 		urlParams := strings.Split(urlPath, "/")
 		if len(urlParams) == 3 {
+			log.Info("Request succeeded")
 			AnalyseRequest(w, r, urlParams)
 		} else {
+			log.Info("Request failed")
+
 			w.WriteHeader(500)
 		}
 		})
