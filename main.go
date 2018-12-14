@@ -39,9 +39,10 @@ func main() {
 	backendLeveled := logging.AddModuleLevel(backend)
 	backendLeveled.SetLevel(logging.NOTICE, "")
 	logging.SetBackend(backendLeveled, backendFormatter)
-	log.Info("Applciation Starting")
+	log.Info("Appliciation Starting")
 
 	http.HandleFunc("/", func (w http.ResponseWriter, r *http.Request) {
+		log.Info("Request received")
 		urlPath := r.URL.Path
 		urlParams := strings.Split(urlPath, "/")
 		if len(urlParams) == 3 {
@@ -50,7 +51,10 @@ func main() {
 			w.WriteHeader(500)
 		}
 		})
-	http.ListenAndServe(":9999" , nil)
+	err := http.ListenAndServe(":9999" , nil)
+	if err != nil {
+		log.Errorf("error %+v", err)
+	}
 }
 
 
