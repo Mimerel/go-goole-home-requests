@@ -22,7 +22,7 @@ func ExecuteRequest(url string, id string, instance string, commandClass string,
 	client := http.Client{
 		Timeout: timeout,
 	}
-	postingUrl := "http://" + url + ":8083/ZWaveAPI/Run/devices[" + id + "].instances[" + instance + "].commandClasses["+ commandClass +"].Set("+ level + ")"
+	postingUrl := "http://192.168.222." + url + ":8083/ZWaveAPI/Run/devices[" + id + "].instances[" + instance + "].commandClasses["+ commandClass +"].Set("+ level + ")"
 	log.Info("Request posted : %s", postingUrl)
 
 	_, err = client.Get(postingUrl)
@@ -65,15 +65,22 @@ func main() {
 func AnalyseRequest(w http.ResponseWriter, r *http.Request, urlParams []string) {
 	level := urlParams[1]
 	cmd:= urlParams[2]
-	values := strings.Split(cmd, ",")
-	id := values[0]
-	url := values[1]
-	instance := values[2]
-	commandClass := values[3]
-	err := ExecuteRequest(url, id, instance, commandClass, level)
-	if err != nil {
+	actions := strings.Split(cmd,"|")
+	hasError := false;
+	for _, action := range actions {
+		values := strings.Split(action, ",")
+		id := values[0]
+		url := values[1]
+		instance := values[2]
+		commandClass := values[3]
+		err := ExecuteRequest(url, id, instance, commandClass, level)
+		if err != nil {
+			hasError = true
+		}
+	}
+	if hasError {
 		w.WriteHeader(500)
 	} else {
 		w.WriteHeader(200)
 	}
-}
+	}
