@@ -39,6 +39,7 @@ func main() {
 	backendLeveled := logging.AddModuleLevel(backend)
 	backendLeveled.SetLevel(logging.NOTICE, "")
 	logging.SetBackend(backendLeveled, backendFormatter)
+	log.Info("Applciation Starting")
 
 	http.HandleFunc("/", func (w http.ResponseWriter, r *http.Request) {
 		urlPath := r.URL.Path
