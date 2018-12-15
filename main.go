@@ -69,13 +69,15 @@ func AnalyseRequest(w http.ResponseWriter, r *http.Request, urlParams []string) 
 	hasError := false;
 	for _, action := range actions {
 		values := strings.Split(action, ",")
-		id := values[0]
+		ids := strings.Split(values[0],"+")
 		url := values[1]
 		instance := values[2]
 		commandClass := values[3]
-		err := ExecuteRequest(url, id, instance, commandClass, level)
-		if err != nil {
-			hasError = true
+		for _, id := range ids {
+			err := ExecuteRequest(url, id, instance, commandClass, level)
+			if err != nil {
+				hasError = true
+			}
 		}
 	}
 	if hasError {
