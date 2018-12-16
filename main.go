@@ -136,10 +136,10 @@ func AnalyseRequest(w http.ResponseWriter, r *http.Request, urlParams []string) 
 }
 
 func AnalyseAIRequest(w http.ResponseWriter, r *http.Request, urlParams []string, config Configuration) {
-	level := urlParams[1]
-	instruction := strings.Replace(urlParams[2], "<<", "", 1)
-	instruction = strings.Replace(urlParams[2], ">>", "", 1)
-	instruction = strings.Trim(urlParams[1], " ")
+	level := urlParams[2]
+	instruction := strings.Replace(urlParams[3], "<<", "", 1)
+	instruction = strings.Replace(instruction, ">>", "", 1)
+	instruction = strings.Trim(instruction, " ")
 	log.Info("instructions: %s : %s", level, instruction)
 	for _, listAction := range config.Commands {
 		if listAction.words == instruction {
