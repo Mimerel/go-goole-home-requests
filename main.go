@@ -21,7 +21,7 @@ type Details struct {
 }
 
 type Command struct {
-	words string `yaml:"words,omitempty"`
+	Words string `yaml:"words,omitempty"`
 	Actions []Details `yaml:"actions,omitempty"`
 }
 
@@ -140,9 +140,9 @@ func AnalyseAIRequest(w http.ResponseWriter, r *http.Request, urlParams []string
 	instruction := strings.Replace(urlParams[3], "<<", "", 1)
 	instruction = strings.Replace(instruction, ">>", "", 1)
 	instruction = strings.Trim(instruction, " ")
-	log.Info("instructions: %s : %s", level, instruction)
+	log.Info("instructions: <%s> : <%s>", level, instruction)
 	for _, listAction := range config.Commands {
-		if listAction.words == instruction {
+		if listAction.Words == instruction {
 			config.Cli.SetLang("en")
 			config.Cli.Notify("Instruction found")
 		} else {

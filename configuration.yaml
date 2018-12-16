@@ -1,5 +1,5 @@
 command:
-  - words: "le radiateur"
+  - words: le radiateur
     actions:
       - url: 192.168.222.53
         id:
