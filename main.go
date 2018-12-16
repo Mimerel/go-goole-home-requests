@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/evalphobia/google-home-client-go/googlehome"
 	"github.com/op/go-logging"
 	"net/http"
 	"os"
@@ -35,27 +36,41 @@ func ExecuteRequest(url string, id string, instance string, commandClass string,
 
 
 func main() {
+	cli, err := googlehome.NewClientWithConfig(googlehome.Config{
+		Hostname: "192.168.222.135",
+		Lang:     "fr",
+		Accent:   "FR",
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	// Speak text on Google Home.
+	// cli.SetLang("en")
+	// cli.Notify("Google Home requester started")
+
 	backend := logging.NewLogBackend(os.Stderr, "", 0)
 	backendFormatter := logging.NewBackendFormatter(backend, format)
 	backendLeveled := logging.AddModuleLevel(backend)
 	backendLeveled.SetLevel(logging.NOTICE, "")
 	logging.SetBackend(backendLeveled, backendFormatter)
-	log.Info("Appliciation Starting")
+	log.Info("Application Starting")
 
-	http.HandleFunc("/", func (w http.ResponseWriter, r *http.Request) {
-		log.Info("Request received")
+	http.HandleFunc("/switch/", func (w http.ResponseWriter, r *http.Request) {
 		urlPath := r.URL.Path
+		log.Info("Request received %s", urlPath)
 		urlParams := strings.Split(urlPath, "/")
 		if len(urlParams) == 3 {
 			log.Info("Request succeeded")
 			AnalyseRequest(w, r, urlParams)
 		} else {
 			log.Info("Request failed")
-
 			w.WriteHeader(500)
 		}
 		})
-	err := http.ListenAndServe(":9998" , nil)
+
+
+	err = http.ListenAndServe(":9998" , nil)
 	if err != nil {
 		log.Errorf("error %+v", err)
 	}
