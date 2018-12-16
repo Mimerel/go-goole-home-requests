@@ -19,7 +19,7 @@ command:
       commandClass: 37
   - words:
     - la lampe halog?ne
-    - l'halogène
+    - l'halog?ne
     actions:
     - url: 192.168.222.53
       ids:
