@@ -27,3 +27,94 @@ command:
       value: 255
       instance: 0
       commandClass: 37
+  - words:
+    - les leds
+    actions:
+    - url: 192.168.222.53
+      ids:
+      - 59
+      value: 255
+      instance: 0
+      commandClass: 37
+  - words:
+    - le tableau
+    actions:
+    - url: 192.168.222.53
+      ids:
+      - 60
+      value: 255
+      instance: 0
+      commandClass: 37
+  - words:
+    - la PS3
+    actions:
+    - url: 192.168.222.53
+      ids:
+      - 68
+      value: 255
+      instance: 0
+      commandClass: 37
+  - words:
+    - le macbook de Steven
+    actions:
+    - url: 192.168.222.53
+      ids:
+      - 12
+      value: 255
+      instance: 0
+      commandClass: 37
+  - words:
+    - le macbook d'Anne Marie
+    actions:
+    - url: 192.168.222.53
+      ids:
+      - 16
+      value: 255
+      instance: 0
+      commandClass: 37
+  - words:
+    - la brosse ? chaussures
+    actions:
+    - url: 192.168.222.53
+      ids:
+      - 17
+      value: 255
+      instance: 0
+      commandClass: 37
+  - words:
+    - le trou
+    - le trou de la coursive
+    actions:
+    - url: 192.168.222.53
+      ids:
+      - 62
+      value: 255
+      instance: 0
+      commandClass: 38
+  - words:
+    - la t?l?vision du salon
+    actions:
+    - url: 192.168.222.53
+      ids:
+      - 67
+      value: 255
+      instance: 0
+      commandClass: 37
+  - words:
+    - le volet du salon
+    actions:
+    - url: 192.168.222.53
+      ids:
+      - 70
+      value: 255
+      instance: 0
+      commandClass: 38
+  - words:
+    - la prise de la salle de bain des enfants
+    actions:
+    - url: 192.168.222.53
+      ids:
+      - 72
+      value: 255
+      instance: 0
+      commandClass: 37

@@ -106,10 +106,9 @@ func ExecuteAction(level string, instance string, commandClass string, url strin
 func compareWords(word string, instruction string ) (bool) {
 	same := true;
 	newWord := strings.Replace(word, " ", "", -1)
-	if len(newWord) <= len(instruction) {
+	if len(newWord) == len(instruction) {
 		for i := 0; i < len(newWord); i++ {
 			if string(newWord[i]) != "?" {
-				log.Info("comparing : %s with %s", newWord[i], instruction[i])
 				if newWord[i] != instruction[i] {
 					same = false
 				}
