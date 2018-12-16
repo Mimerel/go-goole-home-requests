@@ -14,7 +14,7 @@ import (
 
 type Details struct {
 	Url string `yaml:"url,omitempty"`
-	Id []string `yaml:"id,omitempty"`
+	Ids []string `yaml:"ids,omitempty"`
 	Value string `yaml:"value,omitempty"`
 	Instance string `yaml:"instance,omitempty"`
 	CommandClass string `yaml:"commandClass,omitempty"`
@@ -77,18 +77,6 @@ func main() {
 	logging.SetBackend(backendLeveled, backendFormatter)
 	log.Info("Application Starting")
 
-	http.HandleFunc("/switched/", func (w http.ResponseWriter, r *http.Request) {
-		urlPath := r.URL.Path
-		log.Info("Request received %s", urlPath)
-		urlParams := strings.Split(urlPath, "/")
-		if len(urlParams) == 3 {
-			log.Info("Request succeeded")
-			AnalyseRequest(w, r, urlParams)
-		} else {
-			log.Info("Request failed")
-			w.WriteHeader(500)
-		}
-	})
 	http.HandleFunc("/switch/", func (w http.ResponseWriter, r *http.Request) {
 		urlPath := r.URL.Path
 		urlParams := strings.Split(urlPath, "/")
@@ -110,29 +98,15 @@ func main() {
 }
 
 
-func AnalyseRequest(w http.ResponseWriter, r *http.Request, urlParams []string) {
-	level := urlParams[1]
-	cmd:= urlParams[2]
-	actions := strings.Split(cmd,"|")
-	hasError := false;
-	for _, action := range actions {
-		values := strings.Split(action, ",")
-		ids := strings.Split(values[0],"+")
-		url := values[1]
-		instance := values[2]
-		commandClass := values[3]
+func ExecuteAction(level string, instance string, commandClass string, url string, ids []string) (hasError bool){
+	hasError = false;
 		for _, id := range ids {
 			err := ExecuteRequest(url, id, instance, commandClass, level)
 			if err != nil {
 				hasError = true
 			}
 		}
-	}
-	if hasError {
-		w.WriteHeader(500)
-	} else {
-		w.WriteHeader(200)
-	}
+	return hasError
 }
 
 func AnalyseAIRequest(w http.ResponseWriter, r *http.Request, urlParams []string, config Configuration) {
@@ -141,20 +115,23 @@ func AnalyseAIRequest(w http.ResponseWriter, r *http.Request, urlParams []string
 	instruction = strings.Replace(instruction, ">>", "", 1)
 	instruction = strings.Trim(instruction, " ")
 	log.Info("instructions: <%s> : <%s>", level, instruction)
+	found := false
 	for _, listAction := range config.Commands {
 		if listAction.Words == instruction {
-			config.Cli.SetLang("en")
-			config.Cli.Notify("Instruction found")
-		} else {
-			config.Cli.SetLang("en")
-			config.Cli.Notify("Instruction not found")
+			for _, action := range listAction.Actions {
+				ExecuteAction(level, action.Instance, action.CommandClass, action.Url, action.Ids)
+			}
+			found = true;
+			break
 		}
 	}
-	//if hasError {
-	//	w.WriteHeader(500)
-	//} else {
+	if found {
 		w.WriteHeader(200)
-	//}
+	} else {
+		config.Cli.SetLang("en")
+		config.Cli.Notify("Instruction found")
+		w.WriteHeader(500)
+	}
 }
 
 func readConfiguration() (Configuration) {

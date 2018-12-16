@@ -2,7 +2,7 @@ command:
   - words: le radiateur
     actions:
       - url: 192.168.222.53
-        id:
+        ids:
           - 9
         value: 255
         instance: 0
