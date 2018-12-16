@@ -91,8 +91,9 @@ func main() {
 	})
 	http.HandleFunc("/switch/", func (w http.ResponseWriter, r *http.Request) {
 		urlPath := r.URL.Path
-		log.Info("Request received %s", urlPath)
 		urlParams := strings.Split(urlPath, "/")
+		log.Info("Request received %s / %d", urlPath, len(urlParams))
+
 		if len(urlParams) == 3 {
 			log.Info("Request succeeded")
 			AnalyseAIRequest(w, r, urlParams, config)
