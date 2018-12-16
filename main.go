@@ -103,6 +103,20 @@ func ExecuteAction(level string, instance string, commandClass string, url strin
 	return hasError
 }
 
+func compareWords(word string, instruction string ) (bool) {
+	same := true;
+	newWord := strings.Replace(word, " ", "", -1)
+	for i := 0; i < len(newWord); i++ {
+		if string(newWord[i]) != "?" {
+			log.Info("comparing : %s with %s", newWord[i], instruction[i])
+			if newWord[i] != instruction[i] {
+				same = false
+			}
+		}
+	}
+	return same
+}
+
 func AnalyseAIRequest(w http.ResponseWriter, r *http.Request, urlParams []string, config Configuration) {
 	level := urlParams[2]
 	instruction := strings.Replace(urlParams[3], "<<", "", 1)
@@ -113,8 +127,7 @@ func AnalyseAIRequest(w http.ResponseWriter, r *http.Request, urlParams []string
 	found := false
 	for _, listAction := range config.Commands {
 		for _, word := range listAction.Words{
-			log.Info("searching instruction : <%s> : <%s>", instruction, strings.Replace(word, " ", "", -1))
-			if strings.Replace(word, " ", "", -1) == instruction {
+			if  compareWords(word, instruction) {
 			for _, action := range listAction.Actions{
 			ExecuteAction(level, action.Instance, action.CommandClass, action.Url, action.Ids)
 		}
