@@ -94,7 +94,7 @@ func main() {
 		urlParams := strings.Split(urlPath, "/")
 		log.Info("Request received %s / %d", urlPath, len(urlParams))
 
-		if len(urlParams) == 3 {
+		if len(urlParams) == 4 {
 			log.Info("Request succeeded")
 			AnalyseAIRequest(w, r, urlParams, config)
 		} else {
