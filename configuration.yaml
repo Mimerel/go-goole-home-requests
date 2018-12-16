@@ -1,9 +1,29 @@
 command:
-  - words: le radiateur
+  - words:
+      - la lampe haute
     actions:
       - url: 192.168.222.53
         ids:
-          - 9
+          - 8
         value: 255
         instance: 0
         commandClass: 37
+  - words:
+    - la lampe basse
+    actions:
+    - url: 192.168.222.53
+      ids:
+      - 2
+      value: 255
+      instance: 0
+      commandClass: 37
+  - words:
+    - la lampe halogène
+    - l'halogène
+    actions:
+    - url: 192.168.222.53
+      ids:
+      - 4
+      value: 255
+      instance: 0
+      commandClass: 37

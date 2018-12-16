@@ -13,38 +13,35 @@ import (
 )
 
 type Details struct {
-	Url string `yaml:"url,omitempty"`
-	Ids []string `yaml:"ids,omitempty"`
-	Value string `yaml:"value,omitempty"`
-	Instance string `yaml:"instance,omitempty"`
-	CommandClass string `yaml:"commandClass,omitempty"`
+	Url          string   `yaml:"url,omitempty"`
+	Ids          []string `yaml:"ids,omitempty"`
+	Value        string   `yaml:"value,omitempty"`
+	Instance     string   `yaml:"instance,omitempty"`
+	CommandClass string   `yaml:"commandClass,omitempty"`
 }
 
 type Command struct {
-	Words string `yaml:"words,omitempty"`
+	Words   []string  `yaml:"words,omitempty"`
 	Actions []Details `yaml:"actions,omitempty"`
 }
 
 type Configuration struct {
 	Commands []Command `yaml:"command,omitempty"`
-	Cli *googlehome.Client
+	Cli      *googlehome.Client
 }
 
-
 var log = logging.MustGetLogger("default")
-
 
 var format = logging.MustStringFormatter(
 	`%{color}%{time:15:04:05.000} %{shortfunc} ▶ %{level:.4s} %{color:reset} %{message}`,
 )
 
-
-func ExecuteRequest(url string, id string, instance string, commandClass string, level string) (err error){
+func ExecuteRequest(url string, id string, instance string, commandClass string, level string) (err error) {
 	timeout := time.Duration(5 * time.Second)
 	client := http.Client{
 		Timeout: timeout,
 	}
-	postingUrl := "http://" + url + ":8083/ZWaveAPI/Run/devices[" + id + "].instances[" + instance + "].commandClasses["+ commandClass +"].Set("+ level + ")"
+	postingUrl := "http://" + url + ":8083/ZWaveAPI/Run/devices[" + id + "].instances[" + instance + "].commandClasses[" + commandClass + "].Set(" + level + ")"
 	log.Info("Request posted : %s", postingUrl)
 
 	_, err = client.Get(postingUrl)
@@ -54,7 +51,6 @@ func ExecuteRequest(url string, id string, instance string, commandClass string,
 	}
 	return nil
 }
-
 
 func main() {
 	config := readConfiguration()
@@ -69,7 +65,6 @@ func main() {
 	config.Cli = cli
 	// Speak text on Google Home.
 
-
 	backend := logging.NewLogBackend(os.Stderr, "", 0)
 	backendFormatter := logging.NewBackendFormatter(backend, format)
 	backendLeveled := logging.AddModuleLevel(backend)
@@ -77,7 +72,7 @@ func main() {
 	logging.SetBackend(backendLeveled, backendFormatter)
 	log.Info("Application Starting")
 
-	http.HandleFunc("/switch/", func (w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/switch/", func(w http.ResponseWriter, r *http.Request) {
 		urlPath := r.URL.Path
 		urlParams := strings.Split(urlPath, "/")
 		log.Info("Request received %s / %d", urlPath, len(urlParams))
@@ -91,21 +86,20 @@ func main() {
 		}
 	})
 
-	err = http.ListenAndServe(":9998" , nil)
+	err = http.ListenAndServe(":9998", nil)
 	if err != nil {
 		log.Errorf("error %+v", err)
 	}
 }
 
-
-func ExecuteAction(level string, instance string, commandClass string, url string, ids []string) (hasError bool){
+func ExecuteAction(level string, instance string, commandClass string, url string, ids []string) (hasError bool) {
 	hasError = false;
-		for _, id := range ids {
-			err := ExecuteRequest(url, id, instance, commandClass, level)
-			if err != nil {
-				hasError = true
-			}
+	for _, id := range ids {
+		err := ExecuteRequest(url, id, instance, commandClass, level)
+		if err != nil {
+			hasError = true
 		}
+	}
 	return hasError
 }
 
@@ -117,12 +111,14 @@ func AnalyseAIRequest(w http.ResponseWriter, r *http.Request, urlParams []string
 	log.Info("instructions: <%s> : <%s>", level, instruction)
 	found := false
 	for _, listAction := range config.Commands {
-		if listAction.Words == instruction {
-			for _, action := range listAction.Actions {
-				ExecuteAction(level, action.Instance, action.CommandClass, action.Url, action.Ids)
-			}
+		for _, word := range listAction.Words{
+			if word == instruction{
+			for _, action := range listAction.Actions{
+			ExecuteAction(level, action.Instance, action.CommandClass, action.Url, action.Ids)
+		}
 			found = true;
 			break
+		}
 		}
 	}
 	if found {
