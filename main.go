@@ -106,13 +106,17 @@ func ExecuteAction(level string, instance string, commandClass string, url strin
 func compareWords(word string, instruction string ) (bool) {
 	same := true;
 	newWord := strings.Replace(word, " ", "", -1)
-	for i := 0; i < len(newWord); i++ {
-		if string(newWord[i]) != "?" {
-			log.Info("comparing : %s with %s", newWord[i], instruction[i])
-			if newWord[i] != instruction[i] {
-				same = false
+	if len(newWord) <= len(instruction) {
+		for i := 0; i < len(newWord); i++ {
+			if string(newWord[i]) != "?" {
+				log.Info("comparing : %s with %s", newWord[i], instruction[i])
+				if newWord[i] != instruction[i] {
+					same = false
+				}
 			}
 		}
+	} else {
+		same = false
 	}
 	return same
 }
@@ -128,12 +132,12 @@ func AnalyseAIRequest(w http.ResponseWriter, r *http.Request, urlParams []string
 	for _, listAction := range config.Commands {
 		for _, word := range listAction.Words{
 			if  compareWords(word, instruction) {
-			for _, action := range listAction.Actions{
-			ExecuteAction(level, action.Instance, action.CommandClass, action.Url, action.Ids)
-		}
-			found = true;
-			break
-		}
+				for _, action := range listAction.Actions{
+					ExecuteAction(level, action.Instance, action.CommandClass, action.Url, action.Ids)
+				}
+				found = true;
+				break
+			}
 		}
 	}
 	if found {
