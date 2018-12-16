@@ -112,7 +112,7 @@ func AnalyseAIRequest(w http.ResponseWriter, r *http.Request, urlParams []string
 	found := false
 	for _, listAction := range config.Commands {
 		for _, word := range listAction.Words{
-			if word == instruction{
+			if strings.Replace(word, " ", "", -1) == strings.Replace(instruction, " ", "", -1) {
 			for _, action := range listAction.Actions{
 			ExecuteAction(level, action.Instance, action.CommandClass, action.Url, action.Ids)
 		}
@@ -125,7 +125,7 @@ func AnalyseAIRequest(w http.ResponseWriter, r *http.Request, urlParams []string
 		w.WriteHeader(200)
 	} else {
 		config.Cli.SetLang("en")
-		config.Cli.Notify("Instruction found")
+		config.Cli.Notify("Sorry, device not found")
 		w.WriteHeader(500)
 	}
 }
