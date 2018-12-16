@@ -64,6 +64,8 @@ func main() {
 		panic(err)
 	}
 	config.Cli = cli
+	config.Cli.SetLang("fr")
+
 	// Speak text on Google Home.
 
 	backend := logging.NewLogBackend(os.Stderr, "", 0)
@@ -158,8 +160,7 @@ func AnalyseAIRequest(w http.ResponseWriter, r *http.Request, urlParams []string
 	if found {
 		w.WriteHeader(200)
 	} else {
-		config.Cli.SetLang("en")
-		config.Cli.Notify("Sorry, device not found")
+		config.Cli.Notify("Désolé, la domotique ne connait pas cette instruction")
 		w.WriteHeader(500)
 	}
 }

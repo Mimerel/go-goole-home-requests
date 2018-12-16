@@ -56,6 +56,29 @@ command:
       instance: 0
       commandClass: 37
   - words:
+    - l'arbre
+    - la lampe arbre
+    type:
+    - 255
+    - 0
+    actions:
+    - url: 192.168.222.53
+      ids:
+      - 74
+      instance: 0
+      commandClass: 37
+  - words:
+    - la charte
+    type:
+    - 255
+    - 0
+    actions:
+    - url: 192.168.222.53
+      ids:
+      - 9
+      instance: 0
+      commandClass: 37
+  - words:
     - la PS3
     type:
     - 255
