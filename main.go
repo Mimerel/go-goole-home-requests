@@ -46,7 +46,7 @@ func main() {
 	}
 
 	// Speak text on Google Home.
-	// cli.SetLang("en")
+	cli.SetLang("en")
 	// cli.Notify("Google Home requester started")
 
 	backend := logging.NewLogBackend(os.Stderr, "", 0)
