@@ -86,7 +86,7 @@ command:
     actions:
     - url: 192.168.222.53
       ids:
-      - 68
+      - 78
       instance: 0
       commandClass: 37
   - words:
@@ -274,3 +274,218 @@ command:
       - 21
       instance: 0
       commandClass: 38
+  - words:
+    - la t?l? du salon
+    - la t?l?vision du salon
+    type:
+    - 255
+    - 0
+    actions:
+    - url: 192.168.222.53
+      ids:
+      - 67
+      instance: 0
+      commandClass: 37
+  - words:
+    - la sonnette
+    - le portier
+    type:
+    - 255
+    - 0
+    actions:
+    - url: 192.168.222.53
+      ids:
+      - 75
+      instance: 0
+      commandClass: 38
+  - words:
+    - le lave linge
+    type:
+    - 255
+    - 0
+    actions:
+    - url: 192.168.222.54
+      ids:
+      - 13
+      instance: 0
+      commandClass: 37
+  - words:
+    - le s?che linge
+    type:
+    - 255
+    - 0
+    actions:
+    - url: 192.168.222.54
+      ids:
+      - 14
+      instance: 0
+      commandClass: 37
+  - words:
+    - l'?vacuation de la cave
+    type:
+    - 255
+    - 0
+    actions:
+    - url: 192.168.222.54
+      ids:
+      - 41
+      instance: 0
+      commandClass: 37
+  - words:
+    - l'adoucisseur
+    type:
+    - 255
+    - 0
+    actions:
+    - url: 192.168.222.54
+      ids:
+      - 12
+      instance: 0
+      commandClass: 37
+  - words:
+    - le frigo du garage
+    - le r?frigerateur du garage
+    type:
+    - 255
+    - 0
+    actions:
+    - url: 192.168.222.54
+      ids:
+      - 10
+      instance: 0
+      commandClass: 37
+  - words:
+    - la cave ? vin
+    type:
+    - 255
+    - 0
+    actions:
+    - url: 192.168.222.54
+      ids:
+      - 8
+      instance: 0
+      commandClass: 37
+  - words:
+    - le deshumidificateur
+    type:
+    - 255
+    - 0
+    actions:
+    - url: 192.168.222.54
+      ids:
+      - 19
+      instance: 0
+      commandClass: 37
+  - words:
+    - le frigo de la cuisine
+    - le r?frigerateur de la cuisine
+    type:
+    - 255
+    - 0
+    actions:
+    - url: 192.168.222.55
+      ids:
+      - 9
+      instance: 0
+      commandClass: 37
+  - words:
+    - les plaques de cuisson
+    type:
+    - 255
+    - 0
+    actions:
+    - url: 192.168.222.55
+      ids:
+      - 6
+      instance: 0
+      commandClass: 37
+  - words:
+    - le four
+    type:
+    - 255
+    - 0
+    actions:
+    - url: 192.168.222.55
+      ids:
+      - 7
+      instance: 0
+      commandClass: 37
+  - words:
+    - le micro-onde
+    - le microonde
+    type:
+    - 255
+    - 0
+    actions:
+    - url: 192.168.222.55
+      ids:
+      - 8
+      instance: 0
+      commandClass: 37
+  - words:
+    - la fontaine des chats
+    type:
+    - 255
+    - 0
+    actions:
+    - url: 192.168.222.55
+      ids:
+      - 15
+      instance: 0
+      commandClass: 37
+  - words:
+    - la machine ? th?
+    type:
+    - 255
+    - 0
+    actions:
+    - url: 192.168.222.55
+      ids:
+      - 24
+      instance: 0
+      commandClass: 37
+  - words:
+    - la machine ? caf?
+    type:
+    - 255
+    - 0
+    actions:
+    - url: 192.168.222.55
+      ids:
+      - 25
+      instance: 0
+      commandClass: 37
+  - words:
+    - les prises principales
+    type:
+    - 255
+    actions:
+    - url: 192.168.222.55
+      ids:
+      - 6
+      - 7
+      - 8
+      - 9
+      - 15
+      - 24
+      - 25
+      instance: 0
+      commandClass: 37
+    - url: 192.168.222.54
+      ids:
+      - 8
+      - 10
+      - 12
+      - 13
+      - 14
+      - 19
+      - 41
+      instance: 0
+      commandClass: 37
+    - url: 192.168.222.53
+      ids:
+      - 75
+      - 17
+      - 67
+      instance: 0
+      commandClass: 37
