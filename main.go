@@ -44,7 +44,7 @@ func ExecuteRequest(url string, id string, instance string, commandClass string,
 	client := http.Client{
 		Timeout: timeout,
 	}
-	postingUrl := url + ":8083/ZWaveAPI/Run/devices[" + id + "].instances[" + instance + "].commandClasses["+ commandClass +"].Set("+ level + ")"
+	postingUrl := "http://" + url + ":8083/ZWaveAPI/Run/devices[" + id + "].instances[" + instance + "].commandClasses["+ commandClass +"].Set("+ level + ")"
 	log.Info("Request posted : %s", postingUrl)
 
 	_, err = client.Get(postingUrl)
