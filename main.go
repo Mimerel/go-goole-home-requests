@@ -4,11 +4,32 @@ import (
 	"fmt"
 	"github.com/evalphobia/google-home-client-go/googlehome"
 	"github.com/op/go-logging"
+	"gopkg.in/yaml.v2"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"strings"
 	"time"
 )
+
+type Details struct {
+	Url string `yaml:"url,omitempty"`
+	Id []string `yaml:"id,omitempty"`
+	Value string `yaml:"value,omitempty"`
+	Instance string `yaml:"instance,omitempty"`
+	CommandClass string `yaml:"commandClass,omitempty"`
+}
+
+type Command struct {
+	words string `yaml:"words,omitempty"`
+	Actions []Details `yaml:"actions,omitempty"`
+}
+
+type Configuration struct {
+	Commands []Command `yaml:"command,omitempty"`
+	Cli *googlehome.Client
+}
+
 
 var log = logging.MustGetLogger("default")
 
@@ -36,6 +57,7 @@ func ExecuteRequest(url string, id string, instance string, commandClass string,
 
 
 func main() {
+	config := readConfiguration()
 	cli, err := googlehome.NewClientWithConfig(googlehome.Config{
 		Hostname: "192.168.222.135",
 		Lang:     "fr",
@@ -44,10 +66,9 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-
+	config.Cli = cli
 	// Speak text on Google Home.
-	cli.SetLang("en")
-	// cli.Notify("Google Home requester started")
+
 
 	backend := logging.NewLogBackend(os.Stderr, "", 0)
 	backendFormatter := logging.NewBackendFormatter(backend, format)
@@ -56,7 +77,7 @@ func main() {
 	logging.SetBackend(backendLeveled, backendFormatter)
 	log.Info("Application Starting")
 
-	http.HandleFunc("/switch/", func (w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/switched/", func (w http.ResponseWriter, r *http.Request) {
 		urlPath := r.URL.Path
 		log.Info("Request received %s", urlPath)
 		urlParams := strings.Split(urlPath, "/")
@@ -67,8 +88,19 @@ func main() {
 			log.Info("Request failed")
 			w.WriteHeader(500)
 		}
-		})
-
+	})
+	http.HandleFunc("/switch/", func (w http.ResponseWriter, r *http.Request) {
+		urlPath := r.URL.Path
+		log.Info("Request received %s", urlPath)
+		urlParams := strings.Split(urlPath, "/")
+		if len(urlParams) == 3 {
+			log.Info("Request succeeded")
+			AnalyseAIRequest(w, r, urlParams, config)
+		} else {
+			log.Info("Request failed")
+			w.WriteHeader(500)
+		}
+	})
 
 	err = http.ListenAndServe(":9998" , nil)
 	if err != nil {
@@ -100,4 +132,50 @@ func AnalyseRequest(w http.ResponseWriter, r *http.Request, urlParams []string) 
 	} else {
 		w.WriteHeader(200)
 	}
+}
+
+func AnalyseAIRequest(w http.ResponseWriter, r *http.Request, urlParams []string, config Configuration) {
+	level := urlParams[1]
+	instruction := strings.Replace(urlParams[2], "<<", "", 1)
+	instruction = strings.Replace(urlParams[2], ">>", "", 1)
+	instruction = strings.Trim(urlParams[1], " ")
+	log.Info("instructions: %s : %s", level, instruction)
+	for _, listAction := range config.Commands {
+		if listAction.words == instruction {
+			config.Cli.SetLang("en")
+			config.Cli.Notify("Instruction found")
+		} else {
+			config.Cli.SetLang("en")
+			config.Cli.Notify("Instruction not found")
+		}
 	}
+	//if hasError {
+	//	w.WriteHeader(500)
+	//} else {
+		w.WriteHeader(200)
+	//}
+}
+
+func readConfiguration() (Configuration) {
+	pathToFile := os.Getenv("LOGGER_CONFIGURATION_FILE")
+	if _, err := os.Stat("/home/pi/go/src/go-goole-home-requests/configuration.yaml"); !os.IsNotExist(err) {
+		pathToFile = "/home/pi/go/src/go-goole-home-requests/configuration.yaml"
+	} else {
+		pathToFile = "./configuration.yaml"
+	}
+	yamlFile, err := ioutil.ReadFile(pathToFile)
+
+	if err != nil {
+		panic(err)
+	}
+
+	var config Configuration
+
+	err = yaml.Unmarshal(yamlFile, &config)
+	if err != nil {
+		panic(err)
+	} else {
+		fmt.Printf("Configuration Loaded : %+v \n", config)
+	}
+	return config
+}

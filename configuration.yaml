@@ -1,0 +1,9 @@
+command:
+  - words: "le radiateur"
+    actions:
+      - url: 192.168.222.53
+        id:
+          - 9
+        value: 255
+        instance: 0
+        commandClass: 37
