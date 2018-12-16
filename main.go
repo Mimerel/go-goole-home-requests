@@ -22,6 +22,7 @@ type Details struct {
 
 type Command struct {
 	Words   []string  `yaml:"words,omitempty"`
+	TypeAction []string `yaml:"type,omitempty"`
 	Actions []Details `yaml:"actions,omitempty"`
 }
 
@@ -120,19 +121,34 @@ func compareWords(word string, instruction string ) (bool) {
 	return same
 }
 
+func compareTypes(actionType []string, requestType string) (bool) {
+	same := false;
+	for _, value := range actionType {
+		if value == requestType {
+			same = true
+		}
+	}
+	return same
+}
+
 func AnalyseAIRequest(w http.ResponseWriter, r *http.Request, urlParams []string, config Configuration) {
-	level := urlParams[2]
+	requestType := urlParams[2]
 	instruction := strings.Replace(urlParams[3], "<<", "", 1)
 	instruction = strings.Replace(instruction, ">>", "", 1)
 	instruction = strings.Trim(instruction, " ")
 	instruction = strings.Replace(instruction, " ", "", -1)
-	log.Info("instructions: <%s> : <%s>", level, instruction)
+	log.Info("instructions: <%s> : <%s>", requestType, instruction)
 	found := false
 	for _, listAction := range config.Commands {
 		for _, word := range listAction.Words{
-			if  compareWords(word, instruction) {
+			if  compareWords(word, instruction) && compareTypes(listAction.TypeAction, requestType) {
 				for _, action := range listAction.Actions{
-					ExecuteAction(level, action.Instance, action.CommandClass, action.Url, action.Ids)
+					if action.Value == "" {
+						ExecuteAction(requestType, action.Instance, action.CommandClass, action.Url, action.Ids)
+
+					} else {
+						ExecuteAction(action.Value, action.Instance, action.CommandClass, action.Url, action.Ids)
+					}
 				}
 				found = true;
 				break

@@ -1,6 +1,9 @@
 command:
   - words:
-      - la lampe haute
+    - la lampe haute
+    type:
+    - 255
+    - 0
     actions:
       - url: 192.168.222.53
         ids:
@@ -10,6 +13,9 @@ command:
         commandClass: 37
   - words:
     - la lampe basse
+    type:
+    - 255
+    - 0
     actions:
     - url: 192.168.222.53
       ids:
@@ -20,6 +26,9 @@ command:
   - words:
     - la lampe halog?ne
     - l'halog?ne
+    type:
+    - 255
+    - 0
     actions:
     - url: 192.168.222.53
       ids:
@@ -29,6 +38,9 @@ command:
       commandClass: 37
   - words:
     - les leds
+    type:
+    - 255
+    - 0
     actions:
     - url: 192.168.222.53
       ids:
@@ -38,6 +50,9 @@ command:
       commandClass: 37
   - words:
     - le tableau
+    type:
+    - 255
+    - 0
     actions:
     - url: 192.168.222.53
       ids:
@@ -47,6 +62,9 @@ command:
       commandClass: 37
   - words:
     - la PS3
+    type:
+    - 255
+    - 0
     actions:
     - url: 192.168.222.53
       ids:
@@ -56,6 +74,9 @@ command:
       commandClass: 37
   - words:
     - le macbook de Steven
+    type:
+    - 255
+    - 0
     actions:
     - url: 192.168.222.53
       ids:
@@ -65,6 +86,9 @@ command:
       commandClass: 37
   - words:
     - le macbook d'Anne Marie
+    type:
+    - 255
+    - 0
     actions:
     - url: 192.168.222.53
       ids:
@@ -74,6 +98,9 @@ command:
       commandClass: 37
   - words:
     - la brosse ? chaussures
+    type:
+    - 255
+    - 0
     actions:
     - url: 192.168.222.53
       ids:
@@ -84,6 +111,9 @@ command:
   - words:
     - le trou
     - le trou de la coursive
+    type:
+    - 255
+    - 0
     actions:
     - url: 192.168.222.53
       ids:
@@ -93,6 +123,9 @@ command:
       commandClass: 38
   - words:
     - la t?l?vision du salon
+    type:
+    - 255
+    - 0
     actions:
     - url: 192.168.222.53
       ids:
@@ -102,6 +135,9 @@ command:
       commandClass: 37
   - words:
     - le volet du salon
+    type:
+    - 255
+    - 0
     actions:
     - url: 192.168.222.53
       ids:
@@ -111,6 +147,9 @@ command:
       commandClass: 38
   - words:
     - la prise de la salle de bain des enfants
+    type:
+    - 255
+    - 0
     actions:
     - url: 192.168.222.53
       ids:
@@ -118,3 +157,38 @@ command:
       value: 255
       instance: 0
       commandClass: 37
+  - words:
+    - le salon
+    type:
+    - 255
+    actions:
+    - url: 192.168.222.53
+      ids:
+      - 8
+      - 2
+      value: 255
+      instance: 0
+      commandClass: 37
+  - words:
+    - le salon
+    type:
+    - 0
+    actions:
+    - url: 192.168.222.53
+      ids:
+      - 2
+      - 4
+      - 8
+      - 9
+      - 59
+      - 60
+      - 74
+      value: 0
+      instance: 0
+      commandClass: 37
+    - url: 192.168.222.53
+      ids:
+      - 62
+      value: 0
+      instance: 0
+      commandClass: 38
