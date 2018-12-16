@@ -8,7 +8,6 @@ command:
       - url: 192.168.222.53
         ids:
           - 8
-        value: 255
         instance: 0
         commandClass: 37
   - words:
@@ -20,7 +19,6 @@ command:
     - url: 192.168.222.53
       ids:
       - 2
-      value: 255
       instance: 0
       commandClass: 37
   - words:
@@ -33,7 +31,6 @@ command:
     - url: 192.168.222.53
       ids:
       - 4
-      value: 255
       instance: 0
       commandClass: 37
   - words:
@@ -45,7 +42,6 @@ command:
     - url: 192.168.222.53
       ids:
       - 59
-      value: 255
       instance: 0
       commandClass: 37
   - words:
@@ -57,7 +53,6 @@ command:
     - url: 192.168.222.53
       ids:
       - 60
-      value: 255
       instance: 0
       commandClass: 37
   - words:
@@ -69,7 +64,6 @@ command:
     - url: 192.168.222.53
       ids:
       - 68
-      value: 255
       instance: 0
       commandClass: 37
   - words:
@@ -81,7 +75,6 @@ command:
     - url: 192.168.222.53
       ids:
       - 12
-      value: 255
       instance: 0
       commandClass: 37
   - words:
@@ -93,7 +86,6 @@ command:
     - url: 192.168.222.53
       ids:
       - 16
-      value: 255
       instance: 0
       commandClass: 37
   - words:
@@ -105,7 +97,6 @@ command:
     - url: 192.168.222.53
       ids:
       - 17
-      value: 255
       instance: 0
       commandClass: 37
   - words:
@@ -118,7 +109,6 @@ command:
     - url: 192.168.222.53
       ids:
       - 62
-      value: 255
       instance: 0
       commandClass: 38
   - words:
@@ -130,21 +120,8 @@ command:
     - url: 192.168.222.53
       ids:
       - 67
-      value: 255
       instance: 0
       commandClass: 37
-  - words:
-    - le volet du salon
-    type:
-    - 255
-    - 0
-    actions:
-    - url: 192.168.222.53
-      ids:
-      - 70
-      value: 255
-      instance: 0
-      commandClass: 38
   - words:
     - la prise de la salle de bain des enfants
     type:
@@ -190,5 +167,87 @@ command:
       ids:
       - 62
       value: 0
+      instance: 0
+      commandClass: 38
+  - words:
+    - les lampes d'ambiance
+    - la d?eco
+    type:
+    - 0
+    - 255
+    actions:
+    - url: 192.168.222.53
+      ids:
+      - 9
+      - 59
+      - 60
+      - 74
+      instance: 0
+      commandClass: 37
+    - url: 192.168.222.53
+      ids:
+      - 62
+      instance: 0
+      commandClass: 38
+  - words:
+    - le volet du salon
+    type:
+    - 255
+    - 0
+    actions:
+    - url: 192.168.222.53
+      ids:
+      - 70
+      instance: 0
+      commandClass: 38
+  - words:
+    - le volet cour de la cuisine
+    type:
+    - 255
+    - 0
+    actions:
+    - url: 192.168.222.55
+      ids:
+      - 20
+      instance: 0
+      commandClass: 38
+  - words:
+    - le volet rue de la cuisine
+    type:
+    - 255
+    - 0
+    actions:
+    - url: 192.168.222.55
+      ids:
+      - 21
+      instance: 0
+      commandClass: 38
+  - words:
+    - les volets de la cuisine
+    type:
+    - 255
+    - 0
+    actions:
+    - url: 192.168.222.55
+      ids:
+      - 20
+      - 21
+      instance: 0
+      commandClass: 38
+  - words:
+    - tous les volets
+    type:
+    - 255
+    - 0
+    actions:
+    - url: 192.168.222.53
+      ids:
+      - 70
+      instance: 0
+      commandClass: 38
+    - url: 192.168.222.55
+      ids:
+      - 20
+      - 21
       instance: 0
       commandClass: 38
