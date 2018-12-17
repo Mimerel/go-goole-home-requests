@@ -122,6 +122,7 @@ func compareWords(word string, instruction string, config Configuration ) (bool)
 	same := true;
 	newWord := strings.Replace(word, " ", "", -1)
 	if len(newWord) == len(instruction) {
+		log.info("Searched, Dbse, %s, %s", newWord, instruction )
 		for i := 0; i < len(newWord); i++ {
 			if charToSkip(string(newWord[i]), config) == false {
 				log.Info("Values compared %s, %s", string(newWord[i]), string(instruction[i]) )
