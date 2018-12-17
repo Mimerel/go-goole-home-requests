@@ -145,6 +145,7 @@ command:
       commandClass: 38
   - words:
     - la télévision du salon
+    - la télé du salon
     type:
     - 255
     - 0

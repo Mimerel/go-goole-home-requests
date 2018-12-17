@@ -124,6 +124,7 @@ func compareWords(word string, instruction string, config Configuration ) (bool)
 	if len(newWord) == len(instruction) {
 		for i := 0; i < len(newWord); i++ {
 			if charToSkip(string(newWord[i]), config) == false {
+				log.Info("Values compared %s, %s", string(newWord[i]), string(instruction[i]) )
 				if newWord[i] != instruction[i] {
 					same = false
 				}
