@@ -131,7 +131,6 @@ func compareWords(word string, instruction string, config Configuration ) (bool)
 	newWord := strings.Replace(word, " ", "", -1)
 	if newWord == instruction {
 		log.Info("Searched, Dbse, %s, %s", newWord, instruction )
-					same = false
 	} else {
 		log.Info("skipped Searched, Dbse, %s, %s", newWord, instruction, len(string(newWord)), len(string(instruction)) )
 		same = false
