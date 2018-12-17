@@ -61,6 +61,7 @@ func main() {
 		Lang:     "fr",
 		Accent:   "FR",
 	})
+	cli.SetVolume(1)
 	if err != nil {
 		panic(err)
 	}
