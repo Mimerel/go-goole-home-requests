@@ -195,13 +195,13 @@ func AnalyseQuestionRequest(w http.ResponseWriter, r *http.Request, urlParams []
 					found = true
 					log.Info("Allume ou éteins " + word)
 					config.Cli.Notify("Allume ou éteins " + word)
-					time.Sleep(2 * time.Second)
+					time.Sleep(3 * time.Second)
 				}
 			}
 		}
 	}
 	if found == false {
-		config.Cli.Notify("Je ne trouve aucune instruction contenant le mot " + instruction)
+		config.Cli.Notify("Je ne trouve aucune instruction contenant le mot " + instruction + ".")
 	}
 }
 
