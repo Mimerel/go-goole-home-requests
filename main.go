@@ -79,7 +79,7 @@ func main() {
 	http.HandleFunc("/switch/", func(w http.ResponseWriter, r *http.Request) {
 		urlPath := r.URL.Path
 		urlParams := strings.Split(urlPath, "/")
-		log.Info("Request received %s / %d", urlPath, len(urlParams))
+		log.Info("Request received switch %s / %d", urlPath, len(urlParams))
 
 		if len(urlParams) == 4 {
 			log.Info("Request succeeded")
@@ -89,6 +89,21 @@ func main() {
 			w.WriteHeader(500)
 		}
 	})
+
+	http.HandleFunc("/question/", func(w http.ResponseWriter, r *http.Request) {
+		urlPath := r.URL.Path
+		urlParams := strings.Split(urlPath, "/")
+		log.Info("Request received question %s / %d", urlPath, len(urlParams))
+
+		if len(urlParams) == 4 {
+			log.Info("Request succeeded")
+			AnalyseQuestionRequest(w, r, urlParams, config)
+		} else {
+			log.Info("Request failed")
+			w.WriteHeader(500)
+		}
+	})
+
 
 	err = http.ListenAndServe(":9998", nil)
 	if err != nil {
@@ -107,18 +122,12 @@ func ExecuteAction(level string, instance string, commandClass string, url strin
 	return hasError
 }
 
-func charToSkip(charAnalysed string, config Configuration) (bool) {
-	toSkip := false
-	for _, value := range config.CharsToRemove {
-		if value == charAnalysed {
-			toSkip = true
-			break
-		}
-	}
-	return toSkip
-}
 
 func convertInstruction (value string) string {
+	instruction := strings.Replace(value, "<<", "", 1)
+	instruction = strings.Replace(instruction, ">>", "", 1)
+	instruction = strings.Trim(instruction, " ")
+	// instruction = strings.Replace(instruction, " ", "", -1)
 	newValue := ""
 	for i := 0; i < len(value); i++ {
 		newValue = newValue + string(value[i])
@@ -128,11 +137,7 @@ func convertInstruction (value string) string {
 
 func compareWords(word string, instruction string, config Configuration ) (bool) {
 	same := true;
-	newWord := strings.Replace(word, " ", "", -1)
-	if newWord == instruction {
-		log.Info("Searched, Dbse, %s, %s", newWord, instruction )
-	} else {
-		log.Info("skipped Searched, Dbse, %s, %s", newWord, instruction, len(string(newWord)), len(string(instruction)) )
+	if word != instruction {
 		same = false
 	}
 	return same
@@ -150,11 +155,7 @@ func compareTypes(actionType []string, requestType string) (bool) {
 
 func AnalyseAIRequest(w http.ResponseWriter, r *http.Request, urlParams []string, config Configuration) {
 	requestType := urlParams[2]
-	instruction := strings.Replace(urlParams[3], "<<", "", 1)
-	instruction = strings.Replace(instruction, ">>", "", 1)
-	instruction = strings.Trim(instruction, " ")
-	instruction = strings.Replace(instruction, " ", "", -1)
-	instruction = convertInstruction(instruction)
+	instruction := convertInstruction(urlParams[3])
 	log.Info("instructions: <%s> : <%s>", requestType, instruction)
 	found := false
 	for _, listAction := range config.Commands {
@@ -178,6 +179,27 @@ func AnalyseAIRequest(w http.ResponseWriter, r *http.Request, urlParams []string
 	} else {
 		config.Cli.Notify("Désolé, la domotique ne connait pas cette instruction")
 		w.WriteHeader(500)
+	}
+}
+
+
+func AnalyseQuestionRequest(w http.ResponseWriter, r *http.Request, urlParams []string, config Configuration) {
+	requestType := urlParams[2]
+	instruction := convertInstruction(urlParams[3])
+	log.Info("instructions: <%s> : <%s>", requestType, instruction)
+	found := false
+	if requestType == "listCommands" {
+		for _, command := range config.Commands {
+			for _, word := range command.Words {
+				if strings.Contains(word, instruction) {
+					found = true
+					config.Cli.Notify(word)
+				}
+			}
+		}
+	}
+	if found == false {
+		config.Cli.Notify("Je ne trouve aucune instruction contenant le mot " + instruction)
 	}
 }
 
