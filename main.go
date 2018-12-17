@@ -137,7 +137,7 @@ func convertInstruction (value string) string {
 
 func compareWords(word string, instruction string, config Configuration ) (bool) {
 	same := true;
-	if word != instruction {
+	if strings.Replace(word, " ", "", -1) != strings.Replace(instruction, " ", "", -1) {
 		same = false
 	}
 	return same
