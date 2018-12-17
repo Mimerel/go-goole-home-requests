@@ -199,6 +199,7 @@ func AnalyseQuestionRequest(w http.ResponseWriter, r *http.Request, urlParams []
 				}
 			}
 		}
+		config.Cli.Notify("Fin de la recherche pour le mot " + instruction + ".")
 	}
 	if found == false {
 		config.Cli.Notify("Je ne trouve aucune instruction contenant le mot " + instruction + ".")
