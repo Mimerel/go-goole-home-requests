@@ -285,18 +285,6 @@ command:
       instance: 0
       commandClass: 38
   - words:
-    - la télé du salon
-    - la télévision du salon
-    type:
-    - 255
-    - 0
-    actions:
-    - url: 192.168.222.53
-      ids:
-      - 67
-      instance: 0
-      commandClass: 37
-  - words:
     - la sonnette
     - le portier
     type:

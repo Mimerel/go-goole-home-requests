@@ -193,7 +193,7 @@ func AnalyseQuestionRequest(w http.ResponseWriter, r *http.Request, urlParams []
 			for _, word := range command.Words {
 				if strings.Contains(word, instruction) {
 					found = true
-					config.Cli.Notify(word)
+					config.Cli.Notify("Allume ou éteins " + word)
 				}
 			}
 		}
