@@ -1,3 +1,12 @@
+charsToRemove:
+  - é
+  - à
+  - ç
+  - è
+  - ê
+  - ö
+  - à
+  - ë
 command:
   - words:
     - la lampe haute
@@ -112,7 +121,7 @@ command:
       instance: 0
       commandClass: 37
   - words:
-    - la brosse ? chaussures
+    - la brosse à chaussures
     type:
     - 255
     - 0
@@ -135,7 +144,7 @@ command:
       instance: 0
       commandClass: 38
   - words:
-    - la t?l?vision du salon
+    - la télévision du salon
     type:
     - 255
     - 0
@@ -194,7 +203,7 @@ command:
       commandClass: 38
   - words:
     - les lampes d'ambiance
-    - la d?co
+    - la déco
     type:
     - 0
     - 255
@@ -275,8 +284,8 @@ command:
       instance: 0
       commandClass: 38
   - words:
-    - la t?l? du salon
-    - la t?l?vision du salon
+    - la télé du salon
+    - la télévision du salon
     type:
     - 255
     - 0
@@ -321,7 +330,7 @@ command:
       instance: 0
       commandClass: 37
   - words:
-    - l'?vacuation de la cave
+    - l'évacuation de la cave
     type:
     - 255
     - 0
@@ -344,7 +353,7 @@ command:
       commandClass: 37
   - words:
     - le frigo du garage
-    - le r?frigerateur du garage
+    - le réfrigerateur du garage
     type:
     - 255
     - 0
@@ -378,7 +387,7 @@ command:
       commandClass: 37
   - words:
     - le frigo de la cuisine
-    - le r?frigerateur de la cuisine
+    - le réfrigerateur de la cuisine
     type:
     - 255
     - 0
@@ -445,7 +454,7 @@ command:
       instance: 0
       commandClass: 37
   - words:
-    - la machine ? caf?
+    - la machine à café
     type:
     - 255
     - 0

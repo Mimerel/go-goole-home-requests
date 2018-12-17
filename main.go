@@ -29,6 +29,7 @@ type Command struct {
 type Configuration struct {
 	Commands []Command `yaml:"command,omitempty"`
 	Cli      *googlehome.Client
+	CharsToRemove []string `yaml:"charsToRemove,omitempty"`
 }
 
 var log = logging.MustGetLogger("default")
@@ -106,12 +107,23 @@ func ExecuteAction(level string, instance string, commandClass string, url strin
 	return hasError
 }
 
-func compareWords(word string, instruction string ) (bool) {
+func charToSkip(charAnalysed string, config Configuration) (bool) {
+	toSkip := false
+	for _, value := range config.CharsToRemove {
+		if value == charAnalysed {
+			toSkip = true
+			break
+		}
+	}
+	return toSkip
+}
+
+func compareWords(word string, instruction string, config Configuration ) (bool) {
 	same := true;
 	newWord := strings.Replace(word, " ", "", -1)
 	if len(newWord) == len(instruction) {
 		for i := 0; i < len(newWord); i++ {
-			if string(newWord[i]) != "?" {
+			if charToSkip(string(newWord[i]), config) == false {
 				if newWord[i] != instruction[i] {
 					same = false
 				}
@@ -143,7 +155,7 @@ func AnalyseAIRequest(w http.ResponseWriter, r *http.Request, urlParams []string
 	found := false
 	for _, listAction := range config.Commands {
 		for _, word := range listAction.Words{
-			if  compareWords(word, instruction) && compareTypes(listAction.TypeAction, requestType) {
+			if  compareWords(word, instruction, config) && compareTypes(listAction.TypeAction, requestType) {
 				for _, action := range listAction.Actions{
 					if action.Value == "" {
 						ExecuteAction(requestType, action.Instance, action.CommandClass, action.Url, action.Ids)
