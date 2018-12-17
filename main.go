@@ -129,8 +129,8 @@ func convertInstruction (value string) string {
 	instruction = strings.Trim(instruction, " ")
 	// instruction = strings.Replace(instruction, " ", "", -1)
 	newValue := ""
-	for i := 0; i < len(value); i++ {
-		newValue = newValue + string(value[i])
+	for i := 0; i < len(instruction); i++ {
+		newValue = newValue + string(instruction[i])
 	}
 	return newValue
 }
