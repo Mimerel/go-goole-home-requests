@@ -132,7 +132,7 @@ func compareWords(word string, instruction string, config Configuration ) (bool)
 			}
 		}
 	} else {
-		log.Info("skipped Searched, Dbse, %s, %s", newWord, instruction )
+		log.Info("skipped Searched, Dbse, %s, %s", newWord, instruction, len(newWord), len(instruction) )
 		same = false
 	}
 	return same
