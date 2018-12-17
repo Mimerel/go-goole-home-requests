@@ -129,17 +129,9 @@ func convertInstruction (value string) string {
 func compareWords(word string, instruction string, config Configuration ) (bool) {
 	same := true;
 	newWord := strings.Replace(word, " ", "", -1)
-	instruction = convertInstruction(instruction)
-	if len(newWord) == len(instruction) {
+	if newWord == instruction {
 		log.Info("Searched, Dbse, %s, %s", newWord, instruction )
-		for i := 0; i < len(newWord); i++ {
-			if charToSkip(string(newWord[i]), config) == false {
-				log.Info("Values compared %s, %s", string(newWord[i]), string(instruction[i]) )
-				if newWord[i] != instruction[i] {
 					same = false
-				}
-			}
-		}
 	} else {
 		log.Info("skipped Searched, Dbse, %s, %s", newWord, instruction, len(string(newWord)), len(string(instruction)) )
 		same = false
@@ -163,6 +155,7 @@ func AnalyseAIRequest(w http.ResponseWriter, r *http.Request, urlParams []string
 	instruction = strings.Replace(instruction, ">>", "", 1)
 	instruction = strings.Trim(instruction, " ")
 	instruction = strings.Replace(instruction, " ", "", -1)
+	instruction = convertInstruction(instruction)
 	log.Info("instructions: <%s> : <%s>", requestType, instruction)
 	found := false
 	for _, listAction := range config.Commands {

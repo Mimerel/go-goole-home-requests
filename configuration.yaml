@@ -31,8 +31,8 @@ command:
       instance: 0
       commandClass: 37
   - words:
-    - la lampe halog?ne
-    - l'halog?ne
+    - la lampe halogène
+    - l'halogène
     type:
     - 255
     - 0
@@ -320,7 +320,7 @@ command:
       instance: 0
       commandClass: 37
   - words:
-    - le s?che linge
+    - le sèche linge
     type:
     - 255
     - 0
@@ -365,7 +365,7 @@ command:
       instance: 0
       commandClass: 37
   - words:
-    - la cave ? vin
+    - la cave à vin
     type:
     - 255
     - 0
@@ -444,7 +444,7 @@ command:
       instance: 0
       commandClass: 37
   - words:
-    - la machine ? th?
+    - la machine à thé
     type:
     - 255
     - 0
