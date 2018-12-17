@@ -121,7 +121,7 @@ func charToSkip(charAnalysed string, config Configuration) (bool) {
 func compareWords(word string, instruction string, config Configuration ) (bool) {
 	same := true;
 	newWord := strings.Replace(word, " ", "", -1)
-	if len(newWord) == len(instruction) {
+	//if len(newWord) == len(instruction) {
 		log.Info("Searched, Dbse, %s, %s", newWord, instruction )
 		for i := 0; i < len(newWord); i++ {
 			if charToSkip(string(newWord[i]), config) == false {
@@ -131,10 +131,10 @@ func compareWords(word string, instruction string, config Configuration ) (bool)
 				}
 			}
 		}
-	} else {
-		log.Info("skipped Searched, Dbse, %s, %s", newWord, instruction, len(string(newWord)), len(string(instruction)) )
-		same = false
-	}
+	//} else {
+	//	log.Info("skipped Searched, Dbse, %s, %s", newWord, instruction, len(string(newWord)), len(string(instruction)) )
+	//	same = false
+	//}
 	return same
 }
 
