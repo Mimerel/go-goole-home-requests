@@ -135,6 +135,15 @@ func convertInstruction (value string) string {
 	return newValue
 }
 
+func remvoveEndletter( value string) string {
+	if strings.HasSuffix(value, "s") {
+		value = strings.TrimSuffix(value, "s")
+	} else if strings.HasSuffix(value, "x"){
+		value = strings.TrimSuffix(value, "x")
+	}
+	return value
+}
+
 func compareWords(word string, instruction string, config Configuration ) (bool) {
 	same := true;
 	if strings.Replace(word, " ", "", -1) != strings.Replace(instruction, " ", "", -1) {
@@ -188,18 +197,18 @@ func AnalyseQuestionRequest(w http.ResponseWriter, r *http.Request, urlParams []
 	instruction := convertInstruction(urlParams[3])
 	log.Info("instructions: <%s> : <%s>", requestType, instruction)
 	found := false
+	foundText := ""
 	if requestType == "listCommands" {
 		for _, command := range config.Commands {
 			for _, word := range command.Words {
-				if strings.Contains(word, instruction) {
+				if strings.Contains(word, remvoveEndletter(instruction)) {
 					found = true
-					log.Info("Allume ou éteins " + word)
-					config.Cli.Notify("Allume ou éteins " + word)
+					foundText += "Allume ou éteins " + word + ";"
 					time.Sleep(3 * time.Second)
 				}
 			}
 		}
-		config.Cli.Notify("Fin de la recherche pour le mot " + instruction + ".")
+		config.Cli.Notify(foundText)
 	}
 	if found == false {
 		config.Cli.Notify("Je ne trouve aucune instruction contenant le mot " + instruction + ".")
