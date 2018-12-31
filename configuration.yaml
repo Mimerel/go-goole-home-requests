@@ -119,7 +119,6 @@ command:
       commandClass: 37
   - words:
     - le chauffage
-    - le chauffage de la cuisine
     rooms:
     - cuisine
     actions:
@@ -135,6 +134,7 @@ command:
     - le chauffage de la cuisine
     rooms:
     - maison
+    - cuisine
     - salon
     actions:
     - allume
@@ -493,6 +493,7 @@ command:
   - words:
     - la sonnette
     - le portier
+    - l'interphone
     rooms:
     - maison
     - salon
