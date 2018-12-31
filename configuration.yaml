@@ -118,6 +118,20 @@ command:
       instance: 0
       commandClass: 37
   - words:
+    - le chauffage
+    - le chauffage de la cuisine
+    rooms:
+    - cuisine
+    actions:
+    - allume
+    - éteins
+    instructions:
+    - url: 192.168.222.55
+      ids:
+      - 22
+      instance: 0
+      commandClass: 37
+  - words:
     - le tableau
     rooms:
     - maison
