@@ -336,6 +336,8 @@ command:
       commandClass: 38
   - words:
     - le volet cour de la cuisine
+    - le volet coté cour
+    - le volet cour
     rooms:
     - maison
     - salon
@@ -351,6 +353,8 @@ command:
       commandClass: 38
   - words:
     - le volet rue de la cuisine
+    - le volet coté rue
+    - le volet rue
     rooms:
     - maison
     - salon
@@ -365,11 +369,23 @@ command:
       instance: 0
       commandClass: 38
   - words:
-    - les volets de la cuisine
+    - les volets
     rooms:
-    - maison
-    - salon
     - cuisine
+    actions:
+    - ouvre
+    - ferme
+    instructions:
+    - url: 192.168.222.55
+      ids:
+      - 20
+      - 21
+      instance: 0
+      commandClass: 38
+  - words:
+    - les volets
+    rooms:
+    - salon
     actions:
     - ouvre
     - ferme
@@ -401,8 +417,6 @@ command:
       instance: 0
       commandClass: 38
   - words:
-    - tous les volets
-    - les volets
     - le volet
     rooms:
     - salon
@@ -475,6 +489,8 @@ command:
       commandClass: 37
   - words:
     - l'évacuation de la cave
+    - la pompe de la cave
+    - la pompe
     rooms:
     - maison
     - salon
@@ -521,6 +537,7 @@ command:
       commandClass: 37
   - words:
     - la cave à vin
+    - le frigo à vin
     rooms:
     - maison
     - salon
@@ -555,6 +572,20 @@ command:
     rooms:
     - maison
     - salon
+    - cuisine
+    actions:
+    - allume
+    - éteins
+    instructions:
+    - url: 192.168.222.55
+      ids:
+      - 9
+      instance: 0
+      commandClass: 37
+  - words:
+    - le frigo
+    - le réfrigerateur
+    rooms:
     - cuisine
     actions:
     - allume
