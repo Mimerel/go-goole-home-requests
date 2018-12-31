@@ -390,10 +390,9 @@ command:
     - ouvre
     - ferme
     instructions:
-    - url: 192.168.222.55
+    - url: 192.168.222.53
       ids:
-      - 20
-      - 21
+      - 70
       instance: 0
       commandClass: 38
   - words:
