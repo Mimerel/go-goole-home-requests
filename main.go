@@ -2,35 +2,15 @@ package main
 
 import (
 	"fmt"
-	"github.com/evalphobia/google-home-client-go/googlehome"
 	"github.com/op/go-logging"
-	"gopkg.in/yaml.v2"
-	"io/ioutil"
+	"go-goole-home-requests/configuration"
+	"go-goole-home-requests/google_talk"
+	"go-goole-home-requests/utils"
 	"net/http"
 	"os"
 	"strings"
 	"time"
 )
-
-type Details struct {
-	Url          string   `yaml:"url,omitempty"`
-	Ids          []string `yaml:"ids,omitempty"`
-	Value        string   `yaml:"value,omitempty"`
-	Instance     string   `yaml:"instance,omitempty"`
-	CommandClass string   `yaml:"commandClass,omitempty"`
-}
-
-type Command struct {
-	Words   []string  `yaml:"words,omitempty"`
-	TypeAction []string `yaml:"type,omitempty"`
-	Actions []Details `yaml:"actions,omitempty"`
-}
-
-type Configuration struct {
-	Commands []Command `yaml:"command,omitempty"`
-	Cli      *googlehome.Client
-	CharsToRemove []string `yaml:"charsToRemove,omitempty"`
-}
 
 var log = logging.MustGetLogger("default")
 
@@ -55,17 +35,7 @@ func ExecuteRequest(url string, id string, instance string, commandClass string,
 }
 
 func main() {
-	config := readConfiguration()
-	cli, err := googlehome.NewClientWithConfig(googlehome.Config{
-		Hostname: "192.168.222.135",
-		Lang:     "fr",
-		Accent:   "FR",
-	})
-	if err != nil {
-		panic(err)
-	}
-	config.Cli = cli
-	config.Cli.SetLang("fr")
+	config := configuration.ReadConfiguration()
 
 	// Speak text on Google Home.
 
@@ -75,20 +45,6 @@ func main() {
 	backendLeveled.SetLevel(logging.NOTICE, "")
 	logging.SetBackend(backendLeveled, backendFormatter)
 	log.Info("Application Starting")
-
-	http.HandleFunc("/switch/", func(w http.ResponseWriter, r *http.Request) {
-		urlPath := r.URL.Path
-		urlParams := strings.Split(urlPath, "/")
-		log.Info("Request received switch %s / %d", urlPath, len(urlParams))
-
-		if len(urlParams) == 4 {
-			log.Info("Request succeeded")
-			AnalyseAIRequest(w, r, urlParams, config)
-		} else {
-			log.Info("Request failed")
-			w.WriteHeader(500)
-		}
-	})
 
 	http.HandleFunc("/question/", func(w http.ResponseWriter, r *http.Request) {
 		urlPath := r.URL.Path
@@ -104,10 +60,85 @@ func main() {
 		}
 	})
 
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		urlPath := r.URL.Path
+		urlParams := strings.Split(urlPath, "/")
+		log.Info("Request received question %s / %d", urlPath, len(urlParams))
 
-	err = http.ListenAndServe(":9998", nil)
+		if len(urlParams) == 3 {
+			log.Info("Request succeeded")
+			AnalyseRequest(w, r, urlParams, config)
+		} else {
+			log.Info("Request failed")
+			w.WriteHeader(500)
+		}
+	})
+
+	err := http.ListenAndServe(":9998", nil)
 	if err != nil {
 		log.Errorf("error %+v", err)
+	}
+}
+
+func AnalyseRequest(w http.ResponseWriter, r *http.Request, urlParams []string, config configuration.Configuration) {
+	concernedRoom := urlParams[1]
+	ips := []string{}
+	for _, google := range config.Googles {
+		if google.Name == concernedRoom {
+			ips = google.Ip
+		}
+	}
+	if len(ips) == 0 {
+		config.Cli.Notify("Désolé, Enceinte pièce non reconnue")
+		w.WriteHeader(500)
+	} else {
+		instruction := utils.ConvertInstruction(urlParams[2])
+		log.Info("instructions: <%s> ", instruction)
+		mainAction := strings.Split(instruction, " ")[0]
+		instruction = strings.Replace(instruction, mainAction, "", 1)
+		instruction = strings.Trim(instruction, "")
+		level := ""
+		found := false
+		for _, action := range config.Actions {
+			for _, actionName := range action.Name {
+				if actionName == mainAction {
+					level = action.Value
+					mainAction = action.Replacement
+					found = true
+				}
+			}
+		}
+		log.Info("instructions: <%s> <%s>",mainAction, instruction)
+		if found == false {
+			google_talk.Talk(ips, "Action introuvable")
+			w.WriteHeader(500)
+		} else {
+			found = false
+			for _, ListInstructions := range config.Commands {
+				for _, word := range ListInstructions.Words {
+					if utils.CompareWords(word, instruction, config) &&
+						utils.CompareRooms(ListInstructions.Rooms, concernedRoom) &&
+						utils.CompareActions(ListInstructions.Actions, mainAction) {
+						for _, instruction := range ListInstructions.Instructions {
+							if instruction.Value == "" {
+								ExecuteAction(level, instruction.Instance, instruction.CommandClass, instruction.Url, instruction.Ids)
+
+							} else {
+								ExecuteAction(instruction.Value, instruction.Instance, instruction.CommandClass, instruction.Url, instruction.Ids)
+							}
+						}
+						found = true;
+						break
+					}
+				}
+			}
+			if found {
+				w.WriteHeader(200)
+			} else {
+				google_talk.Talk(ips, "Instruction introuvable")
+				w.WriteHeader(500)
+			}
+		}
 	}
 }
 
@@ -122,119 +153,25 @@ func ExecuteAction(level string, instance string, commandClass string, url strin
 	return hasError
 }
 
-
-func convertInstruction (value string) string {
-	instruction := strings.Replace(value, "<<", "", 1)
-	instruction = strings.Replace(instruction, ">>", "", 1)
-	instruction = strings.Trim(instruction, " ")
-	// instruction = strings.Replace(instruction, " ", "", -1)
-	newValue := ""
-	for i := 0; i < len(instruction); i++ {
-		newValue = newValue + string(instruction[i])
-	}
-	return newValue
-}
-
-func remvoveEndletter( value string) string {
-	if strings.HasSuffix(value, "s") {
-		value = strings.TrimSuffix(value, "s")
-	} else if strings.HasSuffix(value, "x"){
-		value = strings.TrimSuffix(value, "x")
-	}
-	return value
-}
-
-func compareWords(word string, instruction string, config Configuration ) (bool) {
-	same := true;
-	if strings.Replace(word, " ", "", -1) != strings.Replace(instruction, " ", "", -1) {
-		same = false
-	}
-	return same
-}
-
-func compareTypes(actionType []string, requestType string) (bool) {
-	same := false;
-	for _, value := range actionType {
-		if value == requestType {
-			same = true
-		}
-	}
-	return same
-}
-
-func AnalyseAIRequest(w http.ResponseWriter, r *http.Request, urlParams []string, config Configuration) {
+func AnalyseQuestionRequest(w http.ResponseWriter, r *http.Request, urlParams []string, config configuration.Configuration) {
 	requestType := urlParams[2]
-	instruction := convertInstruction(urlParams[3])
-	log.Info("instructions: <%s> : <%s>", requestType, instruction)
-	found := false
-	for _, listAction := range config.Commands {
-		for _, word := range listAction.Words{
-			if  compareWords(word, instruction, config) && compareTypes(listAction.TypeAction, requestType) {
-				for _, action := range listAction.Actions{
-					if action.Value == "" {
-						ExecuteAction(requestType, action.Instance, action.CommandClass, action.Url, action.Ids)
-
-					} else {
-						ExecuteAction(action.Value, action.Instance, action.CommandClass, action.Url, action.Ids)
-					}
-				}
-				found = true;
-				break
-			}
-		}
-	}
-	if found {
-		w.WriteHeader(200)
-	} else {
-		config.Cli.Notify("Désolé, la domotique ne connait pas cette instruction")
-		w.WriteHeader(500)
-	}
-}
-
-
-func AnalyseQuestionRequest(w http.ResponseWriter, r *http.Request, urlParams []string, config Configuration) {
-	requestType := urlParams[2]
-	instruction := convertInstruction(urlParams[3])
+	instruction := utils.ConvertInstruction(urlParams[3])
 	log.Info("instructions: <%s> : <%s>", requestType, instruction)
 	found := false
 	foundText := ""
 	if requestType == "listCommands" {
 		for _, command := range config.Commands {
 			for _, word := range command.Words {
-				if strings.Contains(word, remvoveEndletter(instruction)) {
+				if strings.Contains(word, utils.RemoveEndletter(instruction)) {
 					found = true
 					foundText += "Allume ou éteins " + word + ";"
 					time.Sleep(3 * time.Second)
 				}
 			}
 		}
-		config.Cli.Notify(foundText)
+		//	google_talk.Talk(ips, foundText)
 	}
 	if found == false {
-		config.Cli.Notify("Je ne trouve aucune instruction contenant le mot " + instruction + ".")
+		//	google_talk.Talk(ips, "Je ne trouve aucune instruction contenant le mot " + instruction + ".")
 	}
-}
-
-func readConfiguration() (Configuration) {
-	pathToFile := os.Getenv("LOGGER_CONFIGURATION_FILE")
-	if _, err := os.Stat("/home/pi/go/src/go-goole-home-requests/configuration.yaml"); !os.IsNotExist(err) {
-		pathToFile = "/home/pi/go/src/go-goole-home-requests/configuration.yaml"
-	} else {
-		pathToFile = "./configuration.yaml"
-	}
-	yamlFile, err := ioutil.ReadFile(pathToFile)
-
-	if err != nil {
-		panic(err)
-	}
-
-	var config Configuration
-
-	err = yaml.Unmarshal(yamlFile, &config)
-	if err != nil {
-		panic(err)
-	} else {
-		fmt.Printf("Configuration Loaded : %+v \n", config)
-	}
-	return config
 }

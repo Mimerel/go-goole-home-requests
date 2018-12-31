@@ -7,13 +7,46 @@ charsToRemove:
   - ö
   - à
   - ë
+googles:
+  - name: salon
+    ip:
+    - 192.168.222.135
+  - name: cuisine
+    ip:
+    - 192.168.222.139
+  - name: maison
+    ip:
+    - 192.168.222.135
+    - 192.168.222.139
+actions:
+  - name:
+      - allume
+    replacement: allume
+    value: 255
+  - name:
+      - éteins
+      - éteint
+    replacement : éteins
+    value: 0
+  - name:
+      - ouvre
+    replacement: ouvre
+    value: 255
+  - name:
+      - ferme
+    replacement: ferme
+    value: 0
 command:
   - words:
     - la lampe haute
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+      - allume
+      - éteins
+    instructions:
       - url: 192.168.222.53
         ids:
           - 8
@@ -21,10 +54,14 @@ command:
         commandClass: 37
   - words:
     - la lampe basse
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.53
       ids:
       - 2
@@ -33,10 +70,14 @@ command:
   - words:
     - la lampe halogène
     - l'halogène
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.53
       ids:
       - 4
@@ -44,10 +85,14 @@ command:
       commandClass: 37
   - words:
     - les leds
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.53
       ids:
       - 59
@@ -55,10 +100,14 @@ command:
       commandClass: 37
   - words:
     - le tableau
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.53
       ids:
       - 60
@@ -67,10 +116,14 @@ command:
   - words:
     - l'arbre
     - la lampe arbre
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.53
       ids:
       - 74
@@ -78,10 +131,14 @@ command:
       commandClass: 37
   - words:
     - la charte
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.53
       ids:
       - 9
@@ -89,10 +146,14 @@ command:
       commandClass: 37
   - words:
     - la PS3
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.53
       ids:
       - 78
@@ -100,10 +161,14 @@ command:
       commandClass: 37
   - words:
     - le macbook de Steven
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.53
       ids:
       - 12
@@ -111,10 +176,14 @@ command:
       commandClass: 37
   - words:
     - le macbook d'Anne Marie
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.53
       ids:
       - 16
@@ -122,10 +191,14 @@ command:
       commandClass: 37
   - words:
     - la brosse à chaussures
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.53
       ids:
       - 17
@@ -134,10 +207,14 @@ command:
   - words:
     - le trou
     - le trou de la coursive
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.53
       ids:
       - 62
@@ -146,10 +223,14 @@ command:
   - words:
     - la télévision du salon
     - la télé du salon
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.53
       ids:
       - 67
@@ -157,10 +238,14 @@ command:
       commandClass: 37
   - words:
     - la prise de la salle de bain des enfants
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.53
       ids:
       - 72
@@ -169,9 +254,13 @@ command:
       commandClass: 37
   - words:
     - le salon
-    type:
-    - 255
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    instructions:
     - url: 192.168.222.53
       ids:
       - 8
@@ -181,9 +270,13 @@ command:
       commandClass: 37
   - words:
     - le salon
-    type:
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - éteins
+    instructions:
     - url: 192.168.222.53
       ids:
       - 2
@@ -205,10 +298,14 @@ command:
   - words:
     - les lampes d'ambiance
     - la déco
-    type:
-    - 0
-    - 255
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.53
       ids:
       - 9
@@ -224,10 +321,14 @@ command:
       commandClass: 38
   - words:
     - le volet du salon
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - ouvre
+    - ferme
+    instructions:
     - url: 192.168.222.53
       ids:
       - 70
@@ -235,10 +336,14 @@ command:
       commandClass: 38
   - words:
     - le volet cour de la cuisine
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - ouvre
+    - ferme
+    instructions:
     - url: 192.168.222.55
       ids:
       - 20
@@ -246,10 +351,14 @@ command:
       commandClass: 38
   - words:
     - le volet rue de la cuisine
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - ouvre
+    - ferme
+    instructions:
     - url: 192.168.222.55
       ids:
       - 21
@@ -257,10 +366,14 @@ command:
       commandClass: 38
   - words:
     - les volets de la cuisine
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - ouvre
+    - ferme
+    instructions:
     - url: 192.168.222.55
       ids:
       - 20
@@ -269,15 +382,48 @@ command:
       commandClass: 38
   - words:
     - tous les volets
-    type:
-    - 255
-    - 0
+    - les volets
+    rooms:
+    - maison
     actions:
+    - ouvre
+    - ferme
+    instructions:
     - url: 192.168.222.53
       ids:
       - 70
       instance: 0
       commandClass: 38
+    - url: 192.168.222.55
+      ids:
+      - 20
+      - 21
+      instance: 0
+      commandClass: 38
+  - words:
+    - tous les volets
+    - les volets
+    - le volet
+    rooms:
+    - salon
+    actions:
+    - ouvre
+    - ferme
+    instructions:
+    - url: 192.168.222.53
+      ids:
+      - 70
+      instance: 0
+      commandClass: 38
+  - words:
+    - tous les volets
+    - les volets
+    rooms:
+    - cuisine
+    actions:
+    - ouvre
+    - ferme
+    instructions:
     - url: 192.168.222.55
       ids:
       - 20
@@ -287,10 +433,11 @@ command:
   - words:
     - la sonnette
     - le portier
-    type:
-    - 255
-    - 0
-    actions:
+    rooms:
+    - maison
+    - salon
+    - cuisine
+    instructions:
     - url: 192.168.222.53
       ids:
       - 75
@@ -298,10 +445,14 @@ command:
       commandClass: 38
   - words:
     - le lave linge
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.54
       ids:
       - 13
@@ -309,10 +460,14 @@ command:
       commandClass: 37
   - words:
     - le sèche linge
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.54
       ids:
       - 14
@@ -320,10 +475,14 @@ command:
       commandClass: 37
   - words:
     - l'évacuation de la cave
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.54
       ids:
       - 41
@@ -331,10 +490,14 @@ command:
       commandClass: 37
   - words:
     - l'adoucisseur
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.54
       ids:
       - 12
@@ -343,10 +506,14 @@ command:
   - words:
     - le frigo du garage
     - le réfrigerateur du garage
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.54
       ids:
       - 10
@@ -354,10 +521,14 @@ command:
       commandClass: 37
   - words:
     - la cave à vin
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.54
       ids:
       - 8
@@ -365,10 +536,14 @@ command:
       commandClass: 37
   - words:
     - le deshumidificateur
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.54
       ids:
       - 19
@@ -377,10 +552,14 @@ command:
   - words:
     - le frigo de la cuisine
     - le réfrigerateur de la cuisine
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.55
       ids:
       - 9
@@ -388,10 +567,14 @@ command:
       commandClass: 37
   - words:
     - les plaques de cuisson
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.55
       ids:
       - 6
@@ -399,22 +582,36 @@ command:
       commandClass: 37
   - words:
     - le four
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.55
       ids:
       - 7
       instance: 0
       commandClass: 37
   - words:
+    - le micro-ondes
+    - le microondes
+    - le four à micro-ondes
+    - le four micro-ondes
     - le micro-onde
     - le microonde
-    type:
-    - 255
-    - 0
+    - le four à micro-onde
+    - le four micro-onde
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.55
       ids:
       - 8
@@ -422,10 +619,14 @@ command:
       commandClass: 37
   - words:
     - la fontaine des chats
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.55
       ids:
       - 15
@@ -433,10 +634,14 @@ command:
       commandClass: 37
   - words:
     - la machine à thé
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.55
       ids:
       - 24
@@ -444,10 +649,14 @@ command:
       commandClass: 37
   - words:
     - la machine à café
-    type:
-    - 255
-    - 0
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    - éteins
+    instructions:
     - url: 192.168.222.55
       ids:
       - 25
@@ -455,9 +664,13 @@ command:
       commandClass: 37
   - words:
     - les prises principales
-    type:
-    - 255
+    rooms:
+    - maison
+    - salon
+    - cuisine
     actions:
+    - allume
+    instructions:
     - url: 192.168.222.55
       ids:
       - 6
