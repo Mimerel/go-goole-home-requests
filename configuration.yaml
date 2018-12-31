@@ -53,6 +53,25 @@ command:
         instance: 0
         commandClass: 37
   - words:
+    - la lampe étoile
+    - les lampes étoile
+    - la lampe étoiles
+    - les lampes étoiles
+    - les étoiles
+    rooms:
+    - maison
+    - salon
+    - cuisine
+    actions:
+    - allume
+    - éteins
+    instructions:
+    - url: 192.168.222.55
+      ids:
+      - 2
+      instance: 0
+      commandClass: 37
+  - words:
     - la lampe basse
     rooms:
     - maison
