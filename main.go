@@ -155,11 +155,11 @@ func AnalyseRequest(w http.ResponseWriter, r *http.Request, urlParams []string, 
 			w.WriteHeader(500)
 		} else {
 			found := false
+			if actionType == "domotiqueCommand" {
+				logs.Info(config.Elasticsearch.Url, config.Host, fmt.Sprintf("Running action <%s>, room <%s>, command <%s>, level <%s>", mainAction, concernedRoom, instruction, level))
+				found = RunDomoticCommand(config, instruction, concernedRoom, mainAction, level)
+			}
 			if found {
-				if actionType == "domotiqueCommand" {
-					logs.Info(config.Elasticsearch.Url, config.Host, fmt.Sprintf("Running action <%s>, room <%s>, command <%s>, level <%s>", mainAction, concernedRoom, instruction, level))
-					found = RunDomoticCommand(config, instruction, concernedRoom, mainAction, level)
-				}
 				w.WriteHeader(200)
 			} else {
 				logs.Error(config.Elasticsearch.Url, config.Host, fmt.Sprintf("not found action <%s>, room <%s>, command <%s>", mainAction, concernedRoom, instruction))

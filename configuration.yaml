@@ -229,7 +229,7 @@ devices:
 
 command:
   - words:
-    - la lampe haute
+    - "la lampe haute"
     rooms:
     - maison
     - salon
@@ -240,11 +240,11 @@ command:
     instructions:
       - name: lampe_haute
   - words:
-    - la lampe étoile
-    - les lampes étoile
-    - la lampe étoiles
-    - les lampes étoiles
-    - les étoiles
+    - "la lampe étoile"
+    - "les lampes étoile"
+    - "la lampe étoiles"
+    - "les lampes étoiles"
+    - "les étoiles"
     rooms:
     - maison
     - salon
@@ -255,7 +255,7 @@ command:
     instructions:
       - name: lampe_etoile
   - words:
-    - la lampe basse
+    - "la lampe basse"
     rooms:
     - maison
     - salon
@@ -266,8 +266,8 @@ command:
     instructions:
       - name: lampe_basse
   - words:
-    - la lampe halogène
-    - l'halogène
+    - "la lampe halogène"
+    - "l'halogène"
     rooms:
     - maison
     - salon
@@ -278,7 +278,9 @@ command:
     instructions:
       - name: lampe_halogene
   - words:
-    - les leds
+    - "les leds"
+    - "les lampes leds"
+    - "les lampes à leds"
     rooms:
     - maison
     - salon
@@ -289,7 +291,7 @@ command:
     instructions:
       - name: lampe_leds
   - words:
-    - le chauffage
+    - "le chauffage"
     rooms:
     - cuisine
     actions:
@@ -298,7 +300,7 @@ command:
     instructions:
       - name: chauffage_cuisine
   - words:
-    - le chauffage de la cuisine
+    - "le chauffage de la cuisine"
     rooms:
     - maison
     - cuisine
@@ -309,8 +311,8 @@ command:
     instructions:
     - name: chauffage_cuisine
   - words:
-    - le tableau
-    - la lampe tableau
+    - "le tableau"
+    - "la lampe tableau"
     rooms:
     - maison
     - salon
@@ -321,8 +323,8 @@ command:
     instructions:
       - name: lampe_tableau
   - words:
-    - l'arbre
-    - la lampe arbre
+    - "l'arbre"
+    - "la lampe arbre"
     rooms:
     - maison
     - salon
@@ -333,7 +335,9 @@ command:
     instructions:
       - name: lampe_arbre
   - words:
-    - la charte
+    - "la charte"
+    - "la lampe au dessus de la télévision"
+    - "la lampe au dessus de la télé"
     rooms:
     - maison
     - salon
@@ -344,8 +348,8 @@ command:
     instructions:
       - name: lampe_charte
   - words:
-    - la PS3
-    - la prise de la PS3
+    - "la PS3"
+    - "la prise de la PS3"
     rooms:
     - maison
     - salon
@@ -356,9 +360,9 @@ command:
     instructions:
       - name: prise_ps3
   - words:
-    - le macbook de Steven
-    - l'ordinateur de Steven
-    - la prise de l'ordinateur de Steven
+    - "le macbook de Steven"
+    - "l'ordinateur de Steven"
+    - "la prise de l'ordinateur de Steven"
     rooms:
     - maison
     - salon
@@ -369,9 +373,9 @@ command:
     instructions:
       - name: prise_macbook_steven
   - words:
-    - le macbook d'Anne Marie
-    - l'ordinateur d'Anne Marie
-    - la prise de l'ordinateur d'Anne Marie
+    - "le macbook d'Anne Marie"
+    - "l'ordinateur d'Anne Marie"
+    - "la prise de l'ordinateur d'Anne Marie"
     rooms:
     - maison
     - salon
@@ -382,10 +386,10 @@ command:
     instructions:
       - name: prise_macbook_anne_marie
   - words:
-    - la brosse à chaussures
-    - la brosse à chaussure
-    - la cireuse à chaussures
-    - la cireuse à chaussure
+    - "la brosse à chaussures"
+    - "la brosse à chaussure"
+    - "la cireuse à chaussures"
+    - "la cireuse à chaussure"
     rooms:
     - maison
     - salon
@@ -396,8 +400,8 @@ command:
     instructions:
       - name: brosse_chaussures
   - words:
-    - le trou
-    - le trou de la coursive
+    - "le trou"
+    - "le trou de la coursive"
     rooms:
     - maison
     - salon
@@ -408,8 +412,8 @@ command:
     instructions:
       - name: lampe_trou
   - words:
-    - la télévision du salon
-    - la télé du salon
+    - "la télévision du salon"
+    - "la télé du salon"
     rooms:
     - maison
     - salon
@@ -420,8 +424,8 @@ command:
     instructions:
       - name: television_salon
   - words:
-    - la télévision
-    - la télé
+    - "la télévision"
+    - "la télé"
     rooms:
     - salon
     actions:
@@ -430,7 +434,7 @@ command:
     instructions:
     - name: television_salon
   - words:
-    - la prise de la salle de bain des enfants
+    - "la prise de la salle de bain des enfants"
     rooms:
     - maison
     - salon
@@ -441,8 +445,8 @@ command:
     instructions:
       - name: prise_sdb_enfants
   - words:
-    - le salon
-    - les lumières du salon
+    - "le salon"
+    - "les lumières du salon"
     rooms:
     - maison
     - salon
@@ -455,8 +459,8 @@ command:
       - name: lampe_basse
         value: 255
   - words:
-    - les lumières du salon
-    - les lumières
+    - "les lumières du salon"
+    - "les lumières"
     rooms:
     - salon
     actions:
@@ -467,9 +471,9 @@ command:
     - name: lampe_basse
       value: 255
   - words:
-    - le salon
-    - les lumières du salon
-    - toutes les lumières du salon
+    - "le salon"
+    - "les lumières du salon"
+    - "toutes les lumières du salon"
     rooms:
     - maison
     - salon
@@ -494,8 +498,8 @@ command:
       - name: lampe_halogene
         value: 0
   - words:
-    - toutes les lumières
-    - toutes les lumières du salon
+    - "toutes les lumières"
+    - "toutes les lumières du salon"
     rooms:
     - maison
     - salon
@@ -512,11 +516,11 @@ command:
     - name: lampe_charte
     - name: lampe_halogene
   - words:
-    - les lampes d'ambiance
-    - les lampes déco
-    - les lampes de décoration
-    - la déco
-    - la décoration
+    - "les lampes d'ambiance"
+    - "les lampes déco"
+    - "les lampes de décoration"
+    - "la déco"
+    - "la décoration"
     rooms:
     - maison
     - salon
@@ -542,14 +546,14 @@ command:
     instructions:
       - name: volet_salon
   - words:
-    - le volet rue de la cuisine
-    - le volet de la cuisine côté cour
-    - le volet de la cuisine cour
-    - le volet côté cour de la cuisine
-    - le volet côté cour
-    - le volet du côté cour
-    - le volet du côté de la cour
-    - le volet cour
+    - "le volet rue de la cuisine"
+    - "le volet de la cuisine côté cour"
+    - "le volet de la cuisine cour"
+    - "le volet côté cour de la cuisine"
+    - "le volet côté cour"
+    - "le volet du côté cour"
+    - "le volet du côté de la cour"
+    - "le volet cour"
     rooms:
     - maison
     - salon
@@ -560,14 +564,14 @@ command:
     instructions:
       - name: volet_cuisine_cour
   - words:
-    - le volet rue de la cuisine
-    - le volet de la cuisine côté rue
-    - le volet de la cuisine rue
-    - le volet côté rue de la cuisine
-    - le volet côté rue
-    - le volet du côté rue
-    - le volet du côté de la rue
-    - le volet rue
+    - "le volet rue de la cuisine"
+    - "le volet de la cuisine côté rue"
+    - "le volet de la cuisine rue"
+    - "le volet côté rue de la cuisine"
+    - "le volet côté rue"
+    - "le volet du côté rue"
+    - "le volet du côté de la rue"
+    - "le volet rue"
     rooms:
     - maison
     - salon
@@ -578,7 +582,7 @@ command:
     instructions:
       - name: volet_cuisine_rue
   - words:
-    - les volets
+    - "les volets"
     rooms:
     - cuisine
     actions:
@@ -588,7 +592,7 @@ command:
       - name: volet_cuisine_cour
       - name: volet_cuisine_rue
   - words:
-    - les volets
+    - "les volets"
     rooms:
     - salon
     actions:
@@ -597,8 +601,8 @@ command:
     instructions:
       - name: volet_salon
   - words:
-    - tous les volets
-    - les volets
+    - "tous les volets"
+    - "les volets"
     rooms:
     - maison
     actions:
@@ -609,7 +613,7 @@ command:
       - name: volet_cuisine_cour
       - name: volet_cuisine_rue
   - words:
-    - le volet
+    - "le volet"
     rooms:
     - salon
     actions:
@@ -618,8 +622,8 @@ command:
     instructions:
       - name: volet_salon
   - words:
-    - tous les volets
-    - les volets
+    - "tous les volets"
+    - "les volets"
     rooms:
     - cuisine
     actions:
@@ -629,11 +633,11 @@ command:
       - name: volet_cuisine_cour
       - name: volet_cuisine_rue
   - words:
-    - la sonnette
-    - le portier
-    - l'interphone
-    - le visiophone
-    - le visio
+    - "la sonnette"
+    - "le portier"
+    - "l'interphone"
+    - "le visiophone"
+    - "le visio"
     rooms:
     - maison
     - salon
@@ -641,9 +645,9 @@ command:
     instructions:
       - name: interphone
   - words:
-    - le lave linge
-    - la machine à laver
-    - la machine à laver le linge
+    - "le lave linge"
+    - "la machine à laver"
+    - "la machine à laver le linge"
     rooms:
     - maison
     - salon
@@ -654,8 +658,8 @@ command:
     instructions:
       - name: lave_linge
   - words:
-    - le sèche linge
-    - la machine à secher le linge
+    - "le sèche linge"
+    - "la machine à secher le linge"
     rooms:
     - maison
     - salon
@@ -666,10 +670,10 @@ command:
     instructions:
       - name: seche_linge
   - words:
-    - l'évacuation de la cave
-    - la pompe de la cave
-    - la pompe
-    - la pompe d'evacutation de la cave
+    - "l'évacuation de la cave"
+    - "la pompe de la cave"
+    - "la pompe"
+    - "la pompe d'evacutation de la cave"
     rooms:
     - maison
     - salon
@@ -680,8 +684,8 @@ command:
     instructions:
       - name: evacuation_cave
   - words:
-    - l'adoucisseur
-    - l'adoucisseur d'eau
+    - "l'adoucisseur"
+    - "l'adoucisseur d'eau"
     rooms:
     - maison
     - salon
@@ -692,8 +696,8 @@ command:
     instructions:
       - name: adoucisseur
   - words:
-    - le frigo du garage
-    - le réfrigerateur du garage
+    - "le frigo du garage"
+    - "le réfrigerateur du garage"
     rooms:
     - maison
     - salon
@@ -704,8 +708,8 @@ command:
     instructions:
       - name: refrigerateur_garage
   - words:
-    - la cave à vin
-    - le frigo à vin
+    - "la cave à vin"
+    - "le frigo à vin"
     rooms:
     - maison
     - salon
@@ -716,7 +720,7 @@ command:
     instructions:
       - name: cave_a_vins
   - words:
-    - le deshumidificateur
+    - "le deshumidificateur"
     rooms:
     - maison
     - salon
@@ -727,8 +731,8 @@ command:
     instructions:
       - name: deshumidificateur
   - words:
-    - le frigo de la cuisine
-    - le réfrigerateur de la cuisine
+    - "le frigo de la cuisine"
+    - "le réfrigerateur de la cuisine"
     rooms:
     - maison
     - salon
@@ -739,8 +743,8 @@ command:
     instructions:
       - name: refrigerateur_cuisine
   - words:
-    - le frigo
-    - le réfrigerateur
+    - "le frigo"
+    - "le réfrigerateur"
     rooms:
     - cuisine
     actions:
@@ -749,9 +753,9 @@ command:
     instructions:
       - name: refrigerateur_cuisine
   - words:
-    - les plaques de cuisson
-    - la cuisinière
-    - la gazinière
+    - "les plaques de cuisson"
+    - "la cuisinière"
+    - "la gazinière"
     rooms:
     - maison
     - salon
@@ -762,8 +766,8 @@ command:
     instructions:
       - name: plaques_de_cuisson
   - words:
-    - le four
-    - le four à chaleur tournante
+    - "le four"
+    - "le four à chaleur tournante"
     rooms:
     - maison
     - salon
@@ -774,14 +778,14 @@ command:
     instructions:
       - name: four
   - words:
-    - le micro-ondes
-    - le microondes
-    - le four à micro-ondes
-    - le four micro-ondes
-    - le micro-onde
-    - le microonde
-    - le four à micro-onde
-    - le four micro-onde
+    - "le micro-ondes"
+    - "le microondes"
+    - "le four à micro-ondes"
+    - "le four micro-ondes"
+    - "le micro-onde"
+    - "le microonde"
+    - "le four à micro-onde"
+    - "le four micro-onde"
     rooms:
     - maison
     - salon
@@ -792,7 +796,7 @@ command:
     instructions:
       - name: micro_ondes
   - words:
-    - la fontaine des chats
+    - "la fontaine des chats"
     rooms:
     - maison
     - salon
@@ -803,7 +807,7 @@ command:
     instructions:
       - name: fontaine_des_chats
   - words:
-    - la machine à thé
+    - "la machine à thé"
     rooms:
     - maison
     - salon
@@ -814,7 +818,7 @@ command:
     instructions:
       - name: machine_a_the
   - words:
-    - la machine à café
+    - "la machine à café"
     rooms:
     - maison
     - salon
@@ -825,7 +829,7 @@ command:
     instructions:
       - name: machine_a_cafe
   - words:
-    - les prises principales
+    - "les prises principales"
     rooms:
     - maison
     - salon
