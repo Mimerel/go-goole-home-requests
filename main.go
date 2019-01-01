@@ -96,7 +96,7 @@ func getActionAndInstruction(instruction string) (action string, newInstruction 
 	log.Info("instructions: <%s> ", instruction)
 	mainAction := strings.Split(instruction, " ")[0]
 	instruction = strings.Replace(instruction, mainAction, "", 1)
-	instruction = strings.Trim(instruction, "")
+	instruction = strings.Trim(instruction, " ")
 	return mainAction, instruction
 }
 
