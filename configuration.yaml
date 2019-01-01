@@ -306,6 +306,7 @@ command:
     - name: chauffage_cuisine
   - words:
     - le tableau
+    - la lampe tableau
     rooms:
     - maison
     - salon
@@ -340,6 +341,7 @@ command:
       - name: lampe_charte
   - words:
     - la PS3
+    - la prise de la PS3
     rooms:
     - maison
     - salon
@@ -351,6 +353,8 @@ command:
       - name: prise_ps3
   - words:
     - le macbook de Steven
+    - l'ordinateur de Steven
+    - la prise de l'ordinateur de Steven
     rooms:
     - maison
     - salon
@@ -362,6 +366,8 @@ command:
       - name: prise_macbook_steven
   - words:
     - le macbook d'Anne Marie
+    - l'ordinateur d'Anne Marie
+    - la prise de l'ordinateur d'Anne Marie
     rooms:
     - maison
     - salon
@@ -373,6 +379,9 @@ command:
       - name: prise_macbook_anne_marie
   - words:
     - la brosse à chaussures
+    - la brosse à chaussure
+    - la cireuse à chaussures
+    - la cireuse à chaussure
     rooms:
     - maison
     - salon
@@ -407,6 +416,16 @@ command:
     instructions:
       - name: television_salon
   - words:
+    - la télévision
+    - la télé
+    rooms:
+    - salon
+    actions:
+    - allume
+    - éteins
+    instructions:
+    - name: television_salon
+  - words:
     - la prise de la salle de bain des enfants
     rooms:
     - maison
@@ -419,6 +438,7 @@ command:
       - name: prise_sdb_enfants
   - words:
     - le salon
+    - les lumières du salon
     rooms:
     - maison
     - salon
@@ -431,7 +451,21 @@ command:
       - name: lampe_basse
         value: 255
   - words:
+    - les lumières du salon
+    - les lumières
+    rooms:
+    - salon
+    actions:
+    - allume
+    instructions:
+    - name: lampe_haute
+      value: 255
+    - name: lampe_basse
+      value: 255
+  - words:
     - le salon
+    - les lumières du salon
+    - toutes les lumières du salon
     rooms:
     - maison
     - salon
@@ -456,8 +490,29 @@ command:
       - name: lampe_halogene
         value: 0
   - words:
+    - toutes les lumières
+    - toutes les lumières du salon
+    rooms:
+    - maison
+    - salon
+    - cuisine
+    actions:
+    - allume
+    instructions:
+    - name: lampe_haute
+    - name: lampe_basse
+    - name: lampe_trou
+    - name: lampe_tableau
+    - name: lampe_leds
+    - name: lampe_arbre
+    - name: lampe_charte
+    - name: lampe_halogene
+  - words:
     - les lampes d'ambiance
+    - les lampes déco
+    - les lampes de décoration
     - la déco
+    - la décoration
     rooms:
     - maison
     - salon
@@ -563,6 +618,8 @@ command:
     - la sonnette
     - le portier
     - l'interphone
+    - le visiophone
+    - le visio
     rooms:
     - maison
     - salon
@@ -571,6 +628,8 @@ command:
       - name: interphone
   - words:
     - le lave linge
+    - la machine à laver
+    - la machine à laver le linge
     rooms:
     - maison
     - salon
@@ -582,6 +641,7 @@ command:
       - name: lave_linge
   - words:
     - le sèche linge
+    - la machine à secher le linge
     rooms:
     - maison
     - salon
@@ -595,6 +655,7 @@ command:
     - l'évacuation de la cave
     - la pompe de la cave
     - la pompe
+    - la pompe d'evacutation de la cave
     rooms:
     - maison
     - salon
@@ -606,6 +667,7 @@ command:
       - name: evacuation_cave
   - words:
     - l'adoucisseur
+    - l'adoucisseur d'eau
     rooms:
     - maison
     - salon
@@ -674,6 +736,8 @@ command:
       - name: refrigerateur_cuisine
   - words:
     - les plaques de cuisson
+    - la cuisinière
+    - la gazinière
     rooms:
     - maison
     - salon
@@ -685,6 +749,7 @@ command:
       - name: plaques_de_cuisson
   - words:
     - le four
+    - le four à chaleur tournante
     rooms:
     - maison
     - salon
