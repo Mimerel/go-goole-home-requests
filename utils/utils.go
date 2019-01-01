@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"go-goole-home-requests/configuration"
 	"strings"
 )
 
@@ -25,7 +24,7 @@ func RemoveEndletter( value string) string {
 	return value
 }
 
-func CompareWords(word string, instruction string, config configuration.Configuration ) (bool) {
+func CompareWords(word string, instruction string ) (bool) {
 	same := true;
 	if strings.Replace(word, " ", "", -1) != strings.Replace(instruction, " ", "", -1) {
 		same = false
@@ -51,4 +50,14 @@ func CompareActions(actions []string, RequestedAction string) (bool) {
 		}
 	}
 	return same
+}
+
+func IsInArray(list []string, value string) (bool) {
+	exists := false;
+	for _, v := range list {
+		if v == value {
+			exists = true
+		}
+	}
+	return exists
 }

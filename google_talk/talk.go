@@ -8,7 +8,7 @@ import (
 
 func Talk(ips []string, message string) {
 	for _, ip := range ips {
-		fmt.Printf("talk message sent to ip : %s", ip)
+		fmt.Printf("talk message sent to ip : %s \n", ip)
 		talkIndividual(ip, message)
 	}
 }
@@ -20,7 +20,7 @@ func talkIndividual(ip string, message string) {
 		Accent:   "FR",
 	})
 	if err != nil {
-		fmt.Printf("unable to send message")
+		fmt.Printf("unable to send message\n")
 	}
 	cli.SetLang("fr")
 	cli.Notify(message)

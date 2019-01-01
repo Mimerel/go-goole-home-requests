@@ -80,57 +80,81 @@ func main() {
 	}
 }
 
-func AnalyseRequest(w http.ResponseWriter, r *http.Request, urlParams []string, config configuration.Configuration) {
-	concernedRoom := urlParams[1]
+func findIpOfGoogleHome(googleList []configuration.GoogleDetails, concernedRoom string) ([]string) {
 	ips := []string{}
-	for _, google := range config.Googles {
+	for _, google := range googleList {
 		if google.Name == concernedRoom {
 			ips = google.Ip
 		}
 	}
-	if len(ips) == 0 {
-		config.Cli.Notify("Désolé, Enceinte pièce non reconnue")
-		w.WriteHeader(500)
-	} else {
-		instruction := utils.ConvertInstruction(urlParams[2])
-		log.Info("instructions: <%s> ", instruction)
-		mainAction := strings.Split(instruction, " ")[0]
-		instruction = strings.Replace(instruction, mainAction, "", 1)
-		instruction = strings.Trim(instruction, "")
-		level := ""
-		found := false
-		for _, action := range config.Actions {
-			for _, actionName := range action.Name {
-				if actionName == mainAction {
-					level = action.Value
-					mainAction = action.Replacement
-					found = true
-				}
+	return ips
+}
+
+func getActionAndInstruction(instruction string) (action string, newInstruction string) {
+	instruction = utils.ConvertInstruction(instruction)
+	log.Info("instructions: <%s> ", instruction)
+	mainAction := strings.Split(instruction, " ")[0]
+	instruction = strings.Replace(instruction, mainAction, "", 1)
+	instruction = strings.Trim(instruction, "")
+	return mainAction, instruction
+}
+
+func checkActionValidity(actions []configuration.ActionDetails, mainAction string) (bool, string, string, string) {
+	found := false
+	level := ""
+	actionType := ""
+	for _, action := range actions {
+		for _, actionName := range action.Name {
+			if actionName == mainAction {
+				level = action.Value
+				mainAction = action.Replacement
+				actionType = action.Type
+				found = true
 			}
 		}
-		log.Info("instructions: <%s> <%s>",mainAction, instruction)
+	}
+	return found, mainAction, level, actionType
+}
+
+func RunDomoticCommand(config *configuration.Configuration, instruction string, concernedRoom string, mainAction string, level string) (bool) {
+	found := false
+	for _, ListInstructions := range config.Commands {
+		for _, word := range ListInstructions.Words {
+			if utils.CompareWords(word, instruction) &&
+				utils.CompareRooms(ListInstructions.Rooms, concernedRoom) &&
+				utils.CompareActions(ListInstructions.Actions, mainAction) {
+				for _, instruction := range ListInstructions.Instructions {
+					if instruction.Value == "" {
+						ExecuteAction(config, level, instruction.DeviceName)
+
+					} else {
+						ExecuteAction(config, instruction.Value, instruction.DeviceName)
+					}
+				}
+				found = true;
+				break
+			}
+		}
+	}
+	return found
+}
+
+func AnalyseRequest(w http.ResponseWriter, r *http.Request, urlParams []string, config *configuration.Configuration) {
+	concernedRoom := urlParams[1]
+	ips := findIpOfGoogleHome(config.Googles, concernedRoom)
+	if len(ips) == 0 {
+		w.WriteHeader(500)
+	} else {
+		mainAction, instruction := getActionAndInstruction(urlParams[2])
+		found, mainAction, level, actionType := checkActionValidity(config.Actions, mainAction)
+		log.Info("Checked instructions: <%s> <%s>", mainAction, instruction)
 		if found == false {
 			google_talk.Talk(ips, "Action introuvable")
 			w.WriteHeader(500)
 		} else {
-			found = false
-			for _, ListInstructions := range config.Commands {
-				for _, word := range ListInstructions.Words {
-					if utils.CompareWords(word, instruction, config) &&
-						utils.CompareRooms(ListInstructions.Rooms, concernedRoom) &&
-						utils.CompareActions(ListInstructions.Actions, mainAction) {
-						for _, instruction := range ListInstructions.Instructions {
-							if instruction.Value == "" {
-								ExecuteAction(level, instruction.Instance, instruction.CommandClass, instruction.Url, instruction.Ids)
-
-							} else {
-								ExecuteAction(instruction.Value, instruction.Instance, instruction.CommandClass, instruction.Url, instruction.Ids)
-							}
-						}
-						found = true;
-						break
-					}
-				}
+			found := false
+			if actionType == "domotiqueCommand" {
+				found = RunDomoticCommand(config, instruction, concernedRoom, mainAction, level)
 			}
 			if found {
 				w.WriteHeader(200)
@@ -142,18 +166,32 @@ func AnalyseRequest(w http.ResponseWriter, r *http.Request, urlParams []string, 
 	}
 }
 
-func ExecuteAction(level string, instance string, commandClass string, url string, ids []string) (hasError bool) {
-	hasError = false;
-	for _, id := range ids {
+func extractDeviceDetails(config *configuration.Configuration, SearchedDevice string) (string, string, string, string) {
+	for _, device := range config.Devices {
+		if device.Name == SearchedDevice {
+			fmt.Printf("found device : %+v \n", device)
+			return device.Url, device.Instance, device.CommandClass, device.Id
+		}
+	}
+	return "", "", "", ""
+}
+
+func ExecuteAction(config *configuration.Configuration, level string, deviceName string) (hasError bool) {
+	hasError = false
+	url, instance, commandClass, id := extractDeviceDetails(config, deviceName)
+	if url != "" {
 		err := ExecuteRequest(url, id, instance, commandClass, level)
 		if err != nil {
 			hasError = true
 		}
+	} else {
+		fmt.Printf("Unable to find device %s \n", deviceName)
+		hasError = true
 	}
 	return hasError
 }
 
-func AnalyseQuestionRequest(w http.ResponseWriter, r *http.Request, urlParams []string, config configuration.Configuration) {
+func AnalyseQuestionRequest(w http.ResponseWriter, r *http.Request, urlParams []string, config *configuration.Configuration) {
 	requestType := urlParams[2]
 	instruction := utils.ConvertInstruction(urlParams[3])
 	log.Info("instructions: <%s> : <%s>", requestType, instruction)

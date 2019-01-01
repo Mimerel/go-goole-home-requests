@@ -18,24 +18,211 @@ googles:
     ip:
     - 192.168.222.135
     - 192.168.222.139
+zwaves:
+  - name: cuisine
+    ip: 192.168.222.55
+  - name: salon
+    ip: 192.168.222.53
+  - name: garage
+    ip: 192.168.222.54
+  - name: combles
+    ip: 192.168.222.56
 actions:
   - name:
       - allume
     replacement: allume
+    type: domotiqueCommand
     value: 255
   - name:
       - éteins
       - éteint
     replacement : éteins
+    type: domotiqueCommand
     value: 0
   - name:
       - ouvre
     replacement: ouvre
+    type: domotiqueCommand
     value: 255
   - name:
       - ferme
     replacement: ferme
+    type: domotiqueCommand
     value: 0
+devices:
+  - name: lampe_basse
+    zwave: salon
+    id: 2
+    instance: 0
+    commandClass: 37
+  - name: lampe_halogene
+    zwave: salon
+    id: 4
+    instance: 0
+    commandClass: 37
+  - name: lampe_leds
+    zwave: salon
+    id: 59
+    instance: 0
+    commandClass: 37
+  - name: lampe_haute
+    zwave: salon
+    id: 8
+    instance: 0
+    commandClass: 37
+  - name: lampe_etoile
+    zwave: cuisine
+    id: 2
+    instance: 0
+    commandClass: 37
+  - name: chauffage_cuisine
+    zwave: cuisine
+    id: 22
+    instance: 0
+    commandClass: 37
+  - name: lampe_tableau
+    zwave: salon
+    id: 60
+    instance: 0
+    commandClass: 37
+  - name: lampe_arbre
+    zwave: salon
+    id: 74
+    instance: 0
+    commandClass: 37
+  - name: lampe_charte
+    zwave: salon
+    id: 9
+    instance: 0
+    commandClass: 37
+  - name: prise_ps3
+    zwave: salon
+    id: 78
+    instance: 0
+    commandClass: 37
+  - name: prise_macbook_steven
+    zwave: salon
+    id: 12
+    instance: 0
+    commandClass: 37
+  - name: prise_macbook_anne_marie
+    zwave: salon
+    id: 16
+    instance: 0
+    commandClass: 37
+  - name: brosse_chaussures
+    zwave: salon
+    id: 17
+    instance: 0
+    commandClass: 37
+  - name: lampe_trou
+    zwave: salon
+    id: 62
+    instance: 0
+    commandClass: 38
+  - name: television_salon
+    zwave: salon
+    id: 67
+    instance: 0
+    commandClass: 37
+  - name: prise_sdb_enfants
+    zwave: salon
+    id: 72
+    value: 255
+    instance: 0
+    commandClass: 37
+  - name: volet_salon
+    zwave: salon
+    id: 70
+    instance: 0
+    commandClass: 38
+  - name: volet_cuisine_cour
+    zwave: cuisine
+    id: 20
+    instance: 0
+    commandClass: 38
+  - name: volet_cuisine_rue
+    zwave: cuisine
+    id: 21
+    instance: 0
+    commandClass: 38
+  - name: interphone
+    zwave: salon
+    id: 75
+    instance: 0
+    commandClass: 38
+  - name: lave_linge
+    zwave: garage
+    id: 13
+    instance: 0
+    commandClass: 37
+  - name: seche_linge
+    zwave: garage
+    ids: 14
+    instance: 0
+    commandClass: 37
+  - name: evacuation_cave
+    zwave: garage
+    id: 41
+    instance: 0
+    commandClass: 37
+  - name: adoucisseur
+    zwave: garage
+    ids: 12
+    instance: 0
+    commandClass: 37
+  - name: refrigerateur_garage
+    zwave: garage
+    id: 10
+    instance: 0
+    commandClass: 37
+  - name: cave_a_vins
+    zwave: garage
+    id: 8
+    instance: 0
+    commandClass: 37
+  - name: deshumidificateur
+    zwave: garage
+    id: 19
+    instance: 0
+    commandClass: 37
+  - name: refrigerateur_cuisine
+    zwave: cuisine
+    id: 9
+    instance: 0
+    commandClass: 37
+  - name: plaques_de_cuisson
+    zwave: cuisine
+    id: 6
+    instance: 0
+    commandClass: 37
+  - name: four
+    zwave: cuisine
+    id: 7
+    instance: 0
+    commandClass: 37
+  - name: micro_ondes
+    zwave: cuisine
+    id: 8
+    instance: 0
+    commandClass: 37
+  - name: fontaine_des_chats
+    zwave: cuisine
+    id: 15
+    instance: 0
+    commandClass: 37
+  - name: machine_a_the
+    zwave: cuisine
+    id: 24
+    instance: 0
+    commandClass: 37
+  - name: machine_a_cafe
+    zwave: cuisine
+    id: 25
+    instance: 0
+    commandClass: 37
+
+
 command:
   - words:
     - la lampe haute
@@ -47,11 +234,7 @@ command:
       - allume
       - éteins
     instructions:
-      - url: 192.168.222.53
-        ids:
-          - 8
-        instance: 0
-        commandClass: 37
+      - name: lampe_haute
   - words:
     - la lampe étoile
     - les lampes étoile
@@ -66,11 +249,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.55
-      ids:
-      - 2
-      instance: 0
-      commandClass: 37
+      - name: lampe_etoile
   - words:
     - la lampe basse
     rooms:
@@ -81,11 +260,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.53
-      ids:
-      - 2
-      instance: 0
-      commandClass: 37
+      - name: lampe_basse
   - words:
     - la lampe halogène
     - l'halogène
@@ -97,11 +272,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.53
-      ids:
-      - 4
-      instance: 0
-      commandClass: 37
+      - name: lampe_halogene
   - words:
     - les leds
     rooms:
@@ -112,11 +283,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.53
-      ids:
-      - 59
-      instance: 0
-      commandClass: 37
+      - name: lampe_leds
   - words:
     - le chauffage
     rooms:
@@ -125,11 +292,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.55
-      ids:
-      - 22
-      instance: 0
-      commandClass: 37
+      - name: chauffage_cuisine
   - words:
     - le chauffage de la cuisine
     rooms:
@@ -140,11 +303,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.55
-      ids:
-      - 22
-      instance: 0
-      commandClass: 37
+    - name: chauffage_cuisine
   - words:
     - le tableau
     rooms:
@@ -155,11 +314,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.53
-      ids:
-      - 60
-      instance: 0
-      commandClass: 37
+      - name: lampe_tableau
   - words:
     - l'arbre
     - la lampe arbre
@@ -171,11 +326,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.53
-      ids:
-      - 74
-      instance: 0
-      commandClass: 37
+      - name: lampe_arbre
   - words:
     - la charte
     rooms:
@@ -186,11 +337,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.53
-      ids:
-      - 9
-      instance: 0
-      commandClass: 37
+      - name: lampe_charte
   - words:
     - la PS3
     rooms:
@@ -201,11 +348,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.53
-      ids:
-      - 78
-      instance: 0
-      commandClass: 37
+      - name: prise_ps3
   - words:
     - le macbook de Steven
     rooms:
@@ -216,11 +359,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.53
-      ids:
-      - 12
-      instance: 0
-      commandClass: 37
+      - name: prise_macbook_steven
   - words:
     - le macbook d'Anne Marie
     rooms:
@@ -231,11 +370,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.53
-      ids:
-      - 16
-      instance: 0
-      commandClass: 37
+      - name: prise_macbook_anne_marie
   - words:
     - la brosse à chaussures
     rooms:
@@ -246,11 +381,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.53
-      ids:
-      - 17
-      instance: 0
-      commandClass: 37
+      - name: brosse_chaussures
   - words:
     - le trou
     - le trou de la coursive
@@ -262,11 +393,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.53
-      ids:
-      - 62
-      instance: 0
-      commandClass: 38
+      - name: lampe_trou
   - words:
     - la télévision du salon
     - la télé du salon
@@ -278,11 +405,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.53
-      ids:
-      - 67
-      instance: 0
-      commandClass: 37
+      - name: television_salon
   - words:
     - la prise de la salle de bain des enfants
     rooms:
@@ -293,12 +416,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.53
-      ids:
-      - 72
-      value: 255
-      instance: 0
-      commandClass: 37
+      - name: prise_sdb_enfants
   - words:
     - le salon
     rooms:
@@ -308,13 +426,10 @@ command:
     actions:
     - allume
     instructions:
-    - url: 192.168.222.53
-      ids:
-      - 8
-      - 2
-      value: 255
-      instance: 0
-      commandClass: 37
+      - name: lampe_haute
+        value: 255
+      - name: lampe_basse
+        value: 255
   - words:
     - le salon
     rooms:
@@ -324,24 +439,22 @@ command:
     actions:
     - éteins
     instructions:
-    - url: 192.168.222.53
-      ids:
-      - 2
-      - 4
-      - 8
-      - 9
-      - 59
-      - 60
-      - 74
-      value: 0
-      instance: 0
-      commandClass: 37
-    - url: 192.168.222.53
-      ids:
-      - 62
-      value: 0
-      instance: 0
-      commandClass: 38
+      - name: lampe_haute
+        value: 0
+      - name: lampe_basse
+        value: 0
+      - name: lampe_trou
+        value: 0
+      - name: lampe_tableau
+        value: 0
+      - name: lampe_leds
+        value: 0
+      - name: lampe_arbre
+        value: 0
+      - name: lampe_charte
+        value: 0
+      - name: lampe_halogene
+        value: 0
   - words:
     - les lampes d'ambiance
     - la déco
@@ -353,19 +466,11 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.53
-      ids:
-      - 9
-      - 59
-      - 60
-      - 74
-      instance: 0
-      commandClass: 37
-    - url: 192.168.222.53
-      ids:
-      - 62
-      instance: 0
-      commandClass: 38
+    - name: lampe_trou
+    - name: lampe_tableau
+    - name: lampe_leds
+    - name: lampe_arbre
+    - name: lampe_charte
   - words:
     - le volet du salon
     rooms:
@@ -376,11 +481,7 @@ command:
     - ouvre
     - ferme
     instructions:
-    - url: 192.168.222.53
-      ids:
-      - 70
-      instance: 0
-      commandClass: 38
+      - name: volet_salon
   - words:
     - le volet cour de la cuisine
     - le volet coté cour
@@ -393,11 +494,7 @@ command:
     - ouvre
     - ferme
     instructions:
-    - url: 192.168.222.55
-      ids:
-      - 20
-      instance: 0
-      commandClass: 38
+      - name: volet_cuisine_cour
   - words:
     - le volet rue de la cuisine
     - le volet coté rue
@@ -410,11 +507,7 @@ command:
     - ouvre
     - ferme
     instructions:
-    - url: 192.168.222.55
-      ids:
-      - 21
-      instance: 0
-      commandClass: 38
+      - name: volet_cuisine_rue
   - words:
     - les volets
     rooms:
@@ -423,12 +516,8 @@ command:
     - ouvre
     - ferme
     instructions:
-    - url: 192.168.222.55
-      ids:
-      - 20
-      - 21
-      instance: 0
-      commandClass: 38
+      - name: volet_cuisine_cour
+      - name: volet_cuisine_rue
   - words:
     - les volets
     rooms:
@@ -437,11 +526,7 @@ command:
     - ouvre
     - ferme
     instructions:
-    - url: 192.168.222.53
-      ids:
-      - 70
-      instance: 0
-      commandClass: 38
+      - name: volet_salon
   - words:
     - tous les volets
     - les volets
@@ -451,17 +536,9 @@ command:
     - ouvre
     - ferme
     instructions:
-    - url: 192.168.222.53
-      ids:
-      - 70
-      instance: 0
-      commandClass: 38
-    - url: 192.168.222.55
-      ids:
-      - 20
-      - 21
-      instance: 0
-      commandClass: 38
+      - name: volet_salon
+      - name: volet_cuisine_cour
+      - name: volet_cuisine_rue
   - words:
     - le volet
     rooms:
@@ -470,11 +547,7 @@ command:
     - ouvre
     - ferme
     instructions:
-    - url: 192.168.222.53
-      ids:
-      - 70
-      instance: 0
-      commandClass: 38
+      - name: volet_salon
   - words:
     - tous les volets
     - les volets
@@ -484,12 +557,8 @@ command:
     - ouvre
     - ferme
     instructions:
-    - url: 192.168.222.55
-      ids:
-      - 20
-      - 21
-      instance: 0
-      commandClass: 38
+      - name: volet_cuisine_cour
+      - name: volet_cuisine_rue
   - words:
     - la sonnette
     - le portier
@@ -499,11 +568,7 @@ command:
     - salon
     - cuisine
     instructions:
-    - url: 192.168.222.53
-      ids:
-      - 75
-      instance: 0
-      commandClass: 38
+      - name: interphone
   - words:
     - le lave linge
     rooms:
@@ -514,11 +579,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.54
-      ids:
-      - 13
-      instance: 0
-      commandClass: 37
+      - name: lave_linge
   - words:
     - le sèche linge
     rooms:
@@ -529,11 +590,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.54
-      ids:
-      - 14
-      instance: 0
-      commandClass: 37
+      - name: seche_linge
   - words:
     - l'évacuation de la cave
     - la pompe de la cave
@@ -546,11 +603,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.54
-      ids:
-      - 41
-      instance: 0
-      commandClass: 37
+      - name: evacuation_cave
   - words:
     - l'adoucisseur
     rooms:
@@ -561,11 +614,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.54
-      ids:
-      - 12
-      instance: 0
-      commandClass: 37
+      - name: adoucisseur
   - words:
     - le frigo du garage
     - le réfrigerateur du garage
@@ -577,11 +626,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.54
-      ids:
-      - 10
-      instance: 0
-      commandClass: 37
+      - name: refrigerateur_garage
   - words:
     - la cave à vin
     - le frigo à vin
@@ -593,11 +638,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.54
-      ids:
-      - 8
-      instance: 0
-      commandClass: 37
+      - name: cave_a_vins
   - words:
     - le deshumidificateur
     rooms:
@@ -608,11 +649,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.54
-      ids:
-      - 19
-      instance: 0
-      commandClass: 37
+      - name: deshumidificateur
   - words:
     - le frigo de la cuisine
     - le réfrigerateur de la cuisine
@@ -624,11 +661,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.55
-      ids:
-      - 9
-      instance: 0
-      commandClass: 37
+      - name: refrigerateur_cuisine
   - words:
     - le frigo
     - le réfrigerateur
@@ -638,11 +671,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.55
-      ids:
-      - 9
-      instance: 0
-      commandClass: 37
+      - name: refrigerateur_cuisine
   - words:
     - les plaques de cuisson
     rooms:
@@ -653,11 +682,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.55
-      ids:
-      - 6
-      instance: 0
-      commandClass: 37
+      - name: plaques_de_cuisson
   - words:
     - le four
     rooms:
@@ -668,11 +693,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.55
-      ids:
-      - 7
-      instance: 0
-      commandClass: 37
+      - name: four
   - words:
     - le micro-ondes
     - le microondes
@@ -690,11 +711,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.55
-      ids:
-      - 8
-      instance: 0
-      commandClass: 37
+      - name: micro_ondes
   - words:
     - la fontaine des chats
     rooms:
@@ -705,11 +722,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.55
-      ids:
-      - 15
-      instance: 0
-      commandClass: 37
+      - name: fontaine_des_chats
   - words:
     - la machine à thé
     rooms:
@@ -720,11 +733,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.55
-      ids:
-      - 24
-      instance: 0
-      commandClass: 37
+      - name: machine_a_the
   - words:
     - la machine à café
     rooms:
@@ -735,11 +744,7 @@ command:
     - allume
     - éteins
     instructions:
-    - url: 192.168.222.55
-      ids:
-      - 25
-      instance: 0
-      commandClass: 37
+      - name: machine_a_cafe
   - words:
     - les prises principales
     rooms:
@@ -749,32 +754,20 @@ command:
     actions:
     - allume
     instructions:
-    - url: 192.168.222.55
-      ids:
-      - 6
-      - 7
-      - 8
-      - 9
-      - 15
-      - 24
-      - 25
-      instance: 0
-      commandClass: 37
-    - url: 192.168.222.54
-      ids:
-      - 8
-      - 10
-      - 12
-      - 13
-      - 14
-      - 19
-      - 41
-      instance: 0
-      commandClass: 37
-    - url: 192.168.222.53
-      ids:
-      - 75
-      - 17
-      - 67
-      instance: 0
-      commandClass: 37
+      - name: four
+      - name: refrigerateur_cuisine
+      - name: refrigerateur_garage
+      - name: plaques_de_cuisson
+      - name: adoucisseur
+      - name: evacuation_cave
+      - name: deshumidificateur
+      - name: cave_a_vins
+      - name: micro_ondes
+      - name: fontaine_des_chats
+      - name: machine_a_the
+      - name: machine_a_cafe
+      - name: interphone
+      - name: lave_linge
+      - name: seche_linge
+      - name: brosse_chaussures
+      - name: television_salon
