@@ -1,3 +1,6 @@
+elasticSearch:
+  url: http://192.168.222.240:9200
+host: go-google-log
 charsToRemove:
   - é
   - à
@@ -7,6 +10,7 @@ charsToRemove:
   - ö
   - à
   - ë
+  - ô
 googles:
   - name: salon
     ip:
@@ -538,8 +542,13 @@ command:
     instructions:
       - name: volet_salon
   - words:
-    - le volet cour de la cuisine
-    - le volet coté cour
+    - le volet rue de la cuisine
+    - le volet de la cuisine côté cour
+    - le volet de la cuisine cour
+    - le volet côté cour de la cuisine
+    - le volet côté cour
+    - le volet du côté cour
+    - le volet du côté de la cour
     - le volet cour
     rooms:
     - maison
@@ -552,7 +561,12 @@ command:
       - name: volet_cuisine_cour
   - words:
     - le volet rue de la cuisine
-    - le volet coté rue
+    - le volet de la cuisine côté rue
+    - le volet de la cuisine rue
+    - le volet côté rue de la cuisine
+    - le volet côté rue
+    - le volet du côté rue
+    - le volet du côté de la rue
     - le volet rue
     rooms:
     - maison

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/op/go-logging"
+	"github.com/Mimerel/go-logger-client"
 	"go-goole-home-requests/configuration"
 	"go-goole-home-requests/google_talk"
 	"go-goole-home-requests/utils"
@@ -149,16 +150,19 @@ func AnalyseRequest(w http.ResponseWriter, r *http.Request, urlParams []string, 
 		found, mainAction, level, actionType := checkActionValidity(config.Actions, mainAction)
 		log.Info("Checked instructions: <%s> <%s>", mainAction, instruction)
 		if found == false {
+			logs.Error(config.Elasticsearch.Url, config.Host, fmt.Sprintf("not found action <%s>, room <%s>, command <%s>", mainAction, concernedRoom, instruction))
 			google_talk.Talk(ips, "Action introuvable")
 			w.WriteHeader(500)
 		} else {
 			found := false
-			if actionType == "domotiqueCommand" {
-				found = RunDomoticCommand(config, instruction, concernedRoom, mainAction, level)
-			}
 			if found {
+				if actionType == "domotiqueCommand" {
+					logs.Info(config.Elasticsearch.Url, config.Host, fmt.Sprintf("Running action <%s>, room <%s>, command <%s>, level <%s>", mainAction, concernedRoom, instruction, level))
+					found = RunDomoticCommand(config, instruction, concernedRoom, mainAction, level)
+				}
 				w.WriteHeader(200)
 			} else {
+				logs.Error(config.Elasticsearch.Url, config.Host, fmt.Sprintf("not found action <%s>, room <%s>, command <%s>", mainAction, concernedRoom, instruction))
 				google_talk.Talk(ips, "Instruction introuvable")
 				w.WriteHeader(500)
 			}

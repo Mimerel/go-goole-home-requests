@@ -1,10 +1,11 @@
 package configuration
 
+
+type Elasticsearch struct {
+	Url string `yaml:"url,omitempty"`
+}
+
 type Details struct {
-	Url          string   `yaml:"url,omitempty"`
-	Ids          []string `yaml:"ids,omitempty"`
-	Instance     string   `yaml:"instance,omitempty"`
-	CommandClass string   `yaml:"commandClass,omitempty"`
 	DeviceName string     `yaml:"name,omitempty"`
 	Value        string   `yaml:"value,omitempty"`
 }
@@ -23,6 +24,8 @@ type Configuration struct {
 	Actions []ActionDetails `yaml:"actions,omitempty"`
 	Devices []Device `yaml:"devices,omitempty"`
 	Zwaves []Zwave `yaml:"zwaves,omitempty"`
+	Elasticsearch Elasticsearch `yaml:"elasticSearch,omitempty"`
+	Host string `yaml:"host,omitempty"`
 }
 
 type Device struct {
