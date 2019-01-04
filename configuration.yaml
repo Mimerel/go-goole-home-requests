@@ -268,6 +268,7 @@ command:
   - words:
     - "la lampe halogène"
     - "l'halogène"
+    - "halogène"
     rooms:
     - maison
     - salon
@@ -470,6 +471,30 @@ command:
       value: 255
     - name: lampe_basse
       value: 255
+  - words:
+    - "les lumières du salon"
+    - "les lumières"
+    rooms:
+    - salon
+    actions:
+    - éteins
+    instructions:
+    - name: lampe_haute
+      value: 0
+    - name: lampe_basse
+      value: 0
+    - name: lampe_trou
+      value: 0
+    - name: lampe_tableau
+      value: 0
+    - name: lampe_leds
+      value: 0
+    - name: lampe_arbre
+      value: 0
+    - name: lampe_charte
+      value: 0
+    - name: lampe_halogene
+      value: 0
   - words:
     - "le salon"
     - "les lumières du salon"
