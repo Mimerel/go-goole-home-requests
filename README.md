@@ -47,7 +47,7 @@ in the url : http://public_ip:port/room1/<< {{TextField}}>>
 
 * Configuration file
 
-`
+```
 // the elasticSearch params are used if you have also added my
 // "github.com/Mimerel/go-logger-client" and have an elasticsearch running
 // Otherwize omit this part.. logs will be displayed in console.
@@ -217,4 +217,4 @@ command:
     instructions:
       - name: lampe_basse
         value:
-`
+```
