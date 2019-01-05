@@ -19,6 +19,9 @@ var format = logging.MustStringFormatter(
 	`%{color}%{time:15:04:05.000} %{shortfunc} ▶ %{level:.4s} %{color:reset} %{message}`,
 )
 
+/**
+Method that sends a request to a domotic zwave server to run an instruction
+ */
 func ExecuteRequest(url string, id string, instance string, commandClass string, level string) (err error) {
 	timeout := time.Duration(5 * time.Second)
 	client := http.Client{
@@ -35,6 +38,9 @@ func ExecuteRequest(url string, id string, instance string, commandClass string,
 	return nil
 }
 
+/**
+Main method
+ */
 func main() {
 	config := configuration.ReadConfiguration()
 
@@ -81,6 +87,10 @@ func main() {
 	}
 }
 
+/**
+Method that searches for the ip(s) concerned by a room.
+When an instruction is used, it will always be linked to a room
+ */
 func findIpOfGoogleHome(googleList []configuration.GoogleDetails, concernedRoom string) ([]string) {
 	ips := []string{}
 	for _, google := range googleList {
@@ -91,6 +101,9 @@ func findIpOfGoogleHome(googleList []configuration.GoogleDetails, concernedRoom 
 	return ips
 }
 
+/**
+Method that splits the instruction into an action and a instruction
+ */
 func getActionAndInstruction(instruction string) (action string, newInstruction string) {
 	instruction = utils.ConvertInstruction(instruction)
 	log.Info("instructions: <%s> ", instruction)
@@ -100,6 +113,9 @@ func getActionAndInstruction(instruction string) (action string, newInstruction 
 	return mainAction, instruction
 }
 
+/**
+Method that checks if the action demanded exists and retrieves the information linked to this action.
+ */
 func checkActionValidity(actions []configuration.ActionDetails, mainAction string) (bool, string, string, string) {
 	found := false
 	level := ""
@@ -117,6 +133,13 @@ func checkActionValidity(actions []configuration.ActionDetails, mainAction strin
 	return found, mainAction, level, actionType
 }
 
+/**
+Method that searches throw the list of possible commands for the
+command sent by google home.
+It first tries to find the corresponding "sentence" in its database.
+IF it is found, it will check if the action is autorized in that room
+If so, it will execute the command
+ */
 func RunDomoticCommand(config *configuration.Configuration, instruction string, concernedRoom string, mainAction string, level string) (bool) {
 	found := false
 	for _, ListInstructions := range config.Commands {

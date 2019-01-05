@@ -6,6 +6,11 @@ import (
 	"time"
 )
 
+/**
+Given a list of ips, and a message, this method will
+loop through the list and run the method to send the message to the different
+google homes.
+ */
 func Talk(ips []string, message string) {
 	for _, ip := range ips {
 		fmt.Printf("talk message sent to ip : %s \n", ip)
@@ -13,6 +18,10 @@ func Talk(ips []string, message string) {
 	}
 }
 
+/**
+Method that send a message to the google home for the
+message to be read out loud
+ */
 func talkIndividual(ip string, message string) {
 	cli, err := googlehome.NewClientWithConfig(googlehome.Config{
 		Hostname: ip,
