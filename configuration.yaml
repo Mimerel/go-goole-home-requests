@@ -225,7 +225,11 @@ devices:
     id: 25
     instance: 0
     commandClass: 37
-
+  - name : pompe_a_bieres
+    zwave: cuisine
+    id: 13
+    instance: 0
+    commandClass: 37
 
 command:
   - words:
@@ -853,6 +857,18 @@ command:
     - éteins
     instructions:
       - name: machine_a_cafe
+  - words:
+    - "la pompe à bière"
+    - "la pompe à bières"
+    rooms:
+    - maison
+    - salon
+    - cuisine
+    actions:
+    - allume
+    - éteins
+    instructions:
+    - name: pompe_a_bieres
   - words:
     - "les prises principales"
     rooms:

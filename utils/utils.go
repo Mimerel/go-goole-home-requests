@@ -26,7 +26,7 @@ func RemoveEndletter( value string) string {
 
 func CompareWords(word string, instruction string ) (bool) {
 	same := true;
-	if strings.Replace(word, " ", "", -1) != strings.Replace(instruction, " ", "", -1) {
+	if strings.ToLower(strings.Replace(word, " ", "", -1)) != strings.ToLower(strings.Replace(instruction, " ", "", -1)) {
 		same = false
 	}
 	return same
