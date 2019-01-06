@@ -9,6 +9,41 @@ It enables you to send commands to on or several zwave domotique servers to exec
 Google home must be linked to your google account
 The same user account must be linked to you IFTT account
 
+* RUN : to run the application either : 
+```
+go run main.go
+```
+or
+```
+go build  // to build the application
+```
+then 
+```
+./go-google-home-requests // to run the build
+```
+
+You will probably be missing dependencies
+```
+	github.com/op/go-logging
+	github.com/Mimerel/go-logger-client
+	go-goole-home-requests/configuration
+	go-goole-home-requests/google_talk
+	go-goole-home-requests/utils
+```
+
+to add a dependency run 
+
+```
+go get <name of dependency>
+```
+
+for example : 
+```
+go get github.com/Mimerel/go-logger-client
+```
+
+
+
 * Zwave - Razberry
 
 
