@@ -66,7 +66,7 @@ devices:
     commandClass: 37
   - name: lampe_leds
     zwave: salon
-    id: 59
+    id: 80
     instance: 0
     commandClass: 37
   - name: lampe_haute
@@ -86,7 +86,7 @@ devices:
     commandClass: 37
   - name: lampe_tableau
     zwave: salon
-    id: 60
+    id: 81
     instance: 0
     commandClass: 37
   - name: lampe_arbre
