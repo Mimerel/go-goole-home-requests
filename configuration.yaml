@@ -142,7 +142,7 @@ devices:
     commandClass: 38
   - name: volet_cuisine_cour
     zwave: cuisine
-    id: 20
+    id: 27
     instance: 0
     commandClass: 38
   - name: volet_cuisine_rue
@@ -230,7 +230,11 @@ devices:
     id: 13
     instance: 0
     commandClass: 37
-
+  - name : lave_vaisselle
+    zwave: cuisine
+    id: 26
+    instance: 0
+    commandClass: 37
 command:
   - words:
     - "la lampe haute"
@@ -835,6 +839,18 @@ command:
     - éteins
     instructions:
       - name: fontaine_des_chats
+  - words:
+    - "lave vaisselle"
+    - "lave-vaisselle"
+    rooms:
+    - maison
+    - salon
+    - cuisine
+    actions:
+    - allume
+    - éteins
+    instructions:
+    - name: lave-vaiselle
   - words:
     - "la machine à thé"
     rooms:
