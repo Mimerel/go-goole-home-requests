@@ -90,8 +90,8 @@ devices:
     instance: 0
     commandClass: 37
   - name: lampe_arbre
-    zwave: salon
-    id: 74
+    zwave: cuisine
+    id: 29
     instance: 0
     commandClass: 37
   - name: lampe_charte
@@ -157,9 +157,9 @@ devices:
     commandClass: 38
   - name: interphone
     zwave: salon
-    id: 75
+    id: 83
     instance: 0
-    commandClass: 38
+    commandClass: 37
   - name: imprimante
     zwave: salon
     id: 82
