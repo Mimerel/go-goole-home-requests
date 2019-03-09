@@ -872,7 +872,7 @@ command:
     - allume
     - éteins
     instructions:
-    - name: lave-vaiselle
+    - name: lave_vaisselle
   - words:
     - "la machine à thé"
     rooms:
