@@ -115,8 +115,8 @@ devices:
     instance: 0
     commandClass: 37
   - name: brosse_chaussures
-    zwave: salon
-    id: 17
+    zwave: cuisine
+    id: 28
     instance: 0
     commandClass: 37
   - name: lampe_trou
@@ -133,6 +133,11 @@ devices:
     zwave: salon
     id: 72
     value: 255
+    instance: 0
+    commandClass: 37
+  - name: prise_sdb_enfants
+    zwave: salon
+    id: 82
     instance: 0
     commandClass: 37
   - name: volet_salon
@@ -155,6 +160,11 @@ devices:
     id: 75
     instance: 0
     commandClass: 38
+  - name: imprimante
+    zwave: salon
+    id: 82
+    instance: 0
+    commandClass: 37
   - name: lave_linge
     zwave: garage
     id: 13
@@ -273,6 +283,18 @@ command:
     - éteins
     instructions:
       - name: lampe_basse
+  - words:
+    - "l'imprimante"
+    - "imprimante"
+    rooms:
+    - maison
+    - salon
+    - cuisine
+    actions:
+    - allume
+    - éteins
+    instructions:
+    - name: imprimante
   - words:
     - "la lampe halogène"
     - "l'halogène"
