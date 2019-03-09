@@ -697,6 +697,9 @@ command:
     - maison
     - salon
     - cuisine
+    actions:
+    - allume
+    - éteins
     instructions:
       - name: interphone
   - words:
