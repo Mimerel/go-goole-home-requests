@@ -187,7 +187,7 @@ func AnalyseRequest(w http.ResponseWriter, r *http.Request, urlParams []string, 
 func extractDeviceDetails(config *configuration.Configuration, SearchedDevice string) (string, string, string, string) {
 	for _, device := range config.Devices {
 		if device.Name == SearchedDevice {
-			fmt.Printf("found device : %+v \n", device)
+			config.Logger.Info("found device : %+v \n", device)
 			return device.Url, device.Instance, device.CommandClass, device.Id
 		}
 	}
