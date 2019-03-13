@@ -16,17 +16,17 @@ import (
 /**
 Method that sends a request to a domotic zwave server to run an instruction
  */
-func ExecuteRequest(url string, id string, instance string, commandClass string, level string) (err error) {
+func ExecuteRequest(config *configuration.Configuration, url string, id string, instance string, commandClass string, level string) (err error) {
 	timeout := time.Duration(5 * time.Second)
 	client := http.Client{
 		Timeout: timeout,
 	}
 	postingUrl := "http://" + url + ":8083/ZWaveAPI/Run/devices[" + id + "].instances[" + instance + "].commandClasses[" + commandClass + "].Set(" + level + ")"
-	log.Info("Request posted : %s", postingUrl)
+	config.Logger.Info("Request posted : %s", postingUrl)
 
 	_, err = client.Get(postingUrl)
 	if err != nil {
-		fmt.Printf("Failed to execute request %s \n", postingUrl, err)
+		config.Logger.Error("Failed to execute request %s \n", postingUrl, err)
 		return err
 	}
 	return nil
@@ -198,7 +198,7 @@ func ExecuteAction(config *configuration.Configuration, level string, deviceName
 	hasError = false
 	url, instance, commandClass, id := extractDeviceDetails(config, deviceName)
 	if url != "" {
-		err := ExecuteRequest(url, id, instance, commandClass, level)
+		err := ExecuteRequest(config, url, id, instance, commandClass, level)
 		if err != nil {
 			hasError = true
 		}
