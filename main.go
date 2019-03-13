@@ -2,22 +2,16 @@ package main
 
 import (
 	"fmt"
-	"github.com/op/go-logging"
 	"github.com/Mimerel/go-logger-client"
+	"github.com/prometheus/common/log"
 	"go-goole-home-requests/configuration"
 	"go-goole-home-requests/google_talk"
 	"go-goole-home-requests/utils"
 	"net/http"
-	"os"
 	"strings"
 	"time"
 )
 
-var log = logging.MustGetLogger("default")
-
-var format = logging.MustStringFormatter(
-	`%{color}%{time:15:04:05.000} %{shortfunc} ▶ %{level:.4s} %{color:reset} %{message}`,
-)
 
 /**
 Method that sends a request to a domotic zwave server to run an instruction
@@ -44,25 +38,22 @@ Main method
 func main() {
 	config := configuration.ReadConfiguration()
 
+	config.Logger = logs.New(config.Elasticsearch.Url, config.Host)
+
 	// Speak text on Google Home.
 
-	backend := logging.NewLogBackend(os.Stderr, "", 0)
-	backendFormatter := logging.NewBackendFormatter(backend, format)
-	backendLeveled := logging.AddModuleLevel(backend)
-	backendLeveled.SetLevel(logging.NOTICE, "")
-	logging.SetBackend(backendLeveled, backendFormatter)
-	log.Info("Application Starting")
+	config.Logger.Info("Application Starting")
 
 	http.HandleFunc("/question/", func(w http.ResponseWriter, r *http.Request) {
 		urlPath := r.URL.Path
 		urlParams := strings.Split(urlPath, "/")
-		log.Info("Request received question %s / %d", urlPath, len(urlParams))
+		config.Logger.Info("Request received question %s / %d", urlPath, len(urlParams))
 
 		if len(urlParams) == 4 {
-			log.Info("Request succeeded")
+			config.Logger.Info("Request succeeded")
 			AnalyseQuestionRequest(w, r, urlParams, config)
 		} else {
-			log.Info("Request failed")
+			config.Logger.Info("Request failed")
 			w.WriteHeader(500)
 		}
 	})
@@ -70,13 +61,13 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		urlPath := r.URL.Path
 		urlParams := strings.Split(urlPath, "/")
-		log.Info("Request received question %s / %d", urlPath, len(urlParams))
+		config.Logger.Info("Request received question %s / %d", urlPath, len(urlParams))
 
 		if len(urlParams) == 3 {
-			log.Info("Request succeeded")
+			config.Logger.Info("Request succeeded")
 			AnalyseRequest(w, r, urlParams, config)
 		} else {
-			log.Info("Request failed")
+			config.Logger.Info("Request failed")
 			w.WriteHeader(500)
 		}
 	})
@@ -104,9 +95,9 @@ func findIpOfGoogleHome(googleList []configuration.GoogleDetails, concernedRoom 
 /**
 Method that splits the instruction into an action and a instruction
  */
-func getActionAndInstruction(instruction string) (action string, newInstruction string) {
+func getActionAndInstruction(config *configuration.Configuration, instruction string) (action string, newInstruction string) {
 	instruction = utils.ConvertInstruction(instruction)
-	log.Info("instructions: <%s> ", instruction)
+	config.Logger.Info("instructions: <%s> ", instruction)
 	mainAction := strings.Split(instruction, " ")[0]
 	instruction = strings.Replace(instruction, mainAction, "", 1)
 	instruction = strings.Trim(instruction, " ")
@@ -169,24 +160,24 @@ func AnalyseRequest(w http.ResponseWriter, r *http.Request, urlParams []string, 
 	if len(ips) == 0 {
 		w.WriteHeader(500)
 	} else {
-		mainAction, instruction := getActionAndInstruction(urlParams[2])
+		mainAction, instruction := getActionAndInstruction(config, urlParams[2])
 		found, mainAction, level, actionType := checkActionValidity(config.Actions, mainAction)
-		log.Info("Checked instructions: <%s> <%s>", mainAction, instruction)
+		config.Logger.Info("Checked instructions: <%s> <%s>", mainAction, instruction)
 		if found == false {
-			logs.Error(config.Elasticsearch.Url, config.Host, fmt.Sprintf("not found action <%s>, room <%s>, command <%s>", mainAction, concernedRoom, instruction))
-			google_talk.Talk(ips, "Action introuvable")
+			config.Logger.Error(config.Elasticsearch.Url, config.Host, fmt.Sprintf("not found action <%s>, room <%s>, command <%s>", mainAction, concernedRoom, instruction))
+			google_talk.Talk(config, ips, "Action introuvable")
 			w.WriteHeader(500)
 		} else {
 			found := false
 			if actionType == "domotiqueCommand" {
-				logs.Info(config.Elasticsearch.Url, config.Host, fmt.Sprintf("Running action <%s>, room <%s>, command <%s>, level <%s>", mainAction, concernedRoom, instruction, level))
+				config.Logger.Info(config.Elasticsearch.Url, config.Host, fmt.Sprintf("Running action <%s>, room <%s>, command <%s>, level <%s>", mainAction, concernedRoom, instruction, level))
 				found = RunDomoticCommand(config, instruction, concernedRoom, mainAction, level)
 			}
 			if found {
 				w.WriteHeader(200)
 			} else {
-				logs.Error(config.Elasticsearch.Url, config.Host, fmt.Sprintf("not found action <%s>, room <%s>, command <%s>", mainAction, concernedRoom, instruction))
-				google_talk.Talk(ips, "Instruction introuvable")
+				config.Logger.Error(config.Elasticsearch.Url, config.Host, fmt.Sprintf("not found action <%s>, room <%s>, command <%s>", mainAction, concernedRoom, instruction))
+				google_talk.Talk(config, ips, "Instruction introuvable")
 				w.WriteHeader(500)
 			}
 		}
@@ -212,7 +203,7 @@ func ExecuteAction(config *configuration.Configuration, level string, deviceName
 			hasError = true
 		}
 	} else {
-		fmt.Printf("Unable to find device %s \n", deviceName)
+		config.Logger.Error("Unable to find device %s \n", deviceName)
 		hasError = true
 	}
 	return hasError
@@ -221,7 +212,7 @@ func ExecuteAction(config *configuration.Configuration, level string, deviceName
 func AnalyseQuestionRequest(w http.ResponseWriter, r *http.Request, urlParams []string, config *configuration.Configuration) {
 	requestType := urlParams[2]
 	instruction := utils.ConvertInstruction(urlParams[3])
-	log.Info("instructions: <%s> : <%s>", requestType, instruction)
+	config.Logger.Info("instructions: <%s> : <%s>", requestType, instruction)
 	found := false
 	foundText := ""
 	if requestType == "listCommands" {

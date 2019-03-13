@@ -1,5 +1,6 @@
 package configuration
 
+import "github.com/Mimerel/go-logger-client"
 
 type Elasticsearch struct {
 	Url string `yaml:"url,omitempty"`
@@ -26,6 +27,7 @@ type Configuration struct {
 	Zwaves []Zwave `yaml:"zwaves,omitempty"`
 	Elasticsearch Elasticsearch `yaml:"elasticSearch,omitempty"`
 	Host string `yaml:"host,omitempty"`
+	Logger logs.LogParams
 }
 
 type Device struct {
