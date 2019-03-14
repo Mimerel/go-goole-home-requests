@@ -245,6 +245,11 @@ devices:
     id: 26
     instance: 0
     commandClass: 37
+  - name: television_combles
+    zwave: salon
+    id: 6
+    instance: 0
+    commandClass: 37
 command:
   - words:
     - "la lampe haute"
@@ -454,6 +459,22 @@ command:
     - éteins
     instructions:
       - name: television_salon
+  - words:
+    - "la télévision des combles"
+    - "la télé des combles"
+    - "la télévision du palier"
+    - "la télé du palier"
+    - "la télévision du palier du second"
+    - "la télé du palier du second"
+    rooms:
+    - maison
+    - salon
+    - cuisine
+    actions:
+    - allume
+    - éteins
+    instructions:
+    - name: television_combles
   - words:
     - "la télévision"
     - "la télé"
