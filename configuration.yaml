@@ -101,7 +101,7 @@ devices:
     commandClass: 37
   - name: prise_ps3
     zwave: salon
-    id: 78
+    id: 86
     instance: 0
     commandClass: 37
   - name: prise_macbook_steven
@@ -162,7 +162,12 @@ devices:
     commandClass: 37
   - name: imprimante
     zwave: salon
-    id: 82
+    id: 87
+    instance: 0
+    commandClass: 37
+  - name: wiiu
+    zwave: salon
+    id: 85
     instance: 0
     commandClass: 37
   - name: lave_linge
@@ -246,7 +251,7 @@ devices:
     instance: 0
     commandClass: 37
   - name: television_combles
-    zwave: salon
+    zwave: combles
     id: 6
     instance: 0
     commandClass: 37
@@ -300,6 +305,18 @@ command:
     - éteins
     instructions:
     - name: imprimante
+  - words:
+    - "la wii"
+    - "la wii U"
+    rooms:
+    - maison
+    - salon
+    - cuisine
+    actions:
+    - allume
+    - éteins
+    instructions:
+    - name: wiiu
   - words:
     - "la lampe halogène"
     - "l'halogène"
