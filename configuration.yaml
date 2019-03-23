@@ -483,6 +483,8 @@ command:
     - "la télé du palier"
     - "la télévision du palier du second"
     - "la télé du palier du second"
+    - "la télé du second"
+    - "la télévision du second"
     rooms:
     - maison
     - salon
@@ -494,6 +496,8 @@ command:
     - name: television_combles
   - words:
     - "la télévision"
+    - "la télévision principale"
+    - "la télé principale
     - "la télé"
     rooms:
     - salon
