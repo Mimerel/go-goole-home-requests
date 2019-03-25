@@ -632,17 +632,6 @@ command:
     - name: lampe_arbre
     - name: lampe_charte
   - words:
-    - le volet du salon
-    rooms:
-    - maison
-    - salon
-    - cuisine
-    actions:
-    - ouvre
-    - ferme
-    instructions:
-      - name: volet_salon
-  - words:
     - "le volet rue de la cuisine"
     - "le volet de la cuisine côté cour"
     - "le volet de la cuisine cour"
@@ -690,6 +679,9 @@ command:
       - name: volet_cuisine_rue
   - words:
     - "les volets"
+    - "le volet"
+    - "le volet du salon"
+    - "les volets du salon"
     rooms:
     - salon
     actions:
