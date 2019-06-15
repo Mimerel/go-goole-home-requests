@@ -1,6 +1,9 @@
 package utils
 
-import "strings"
+import (
+	"go-goole-home-requests/models"
+	"strings"
+)
 
 /**
 On the instruction string received by google home it :
@@ -38,9 +41,15 @@ by removing spaces and converting to lower case.
 Google home puts spaces before and after '
 This method solves that problem
  */
-func CompareWords(word string, instruction string ) (bool) {
+func CompareWords(c *models.Configuration, word string, instruction string ) (bool) {
+	word = strings.ToLower(strings.Replace(word, " ", "", -1))
+	instruction = strings.ToLower(strings.Replace(instruction, " ", "", -1))
 	same := true;
-	if strings.ToLower(strings.Replace(word, " ", "", -1)) != strings.ToLower(strings.Replace(instruction, " ", "", -1)) {
+	for _,v := range c.CharsToReplace {
+		word = strings.Replace(word, v.From, v.To, -1)
+		instruction = strings.Replace(instruction, v.From, v.To, -1)
+	}
+	if word != instruction {
 		same = false
 	}
 	return same
